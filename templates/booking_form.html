@@ -1,0 +1,68 @@
+{#<div class="col-md-6 offset-md-1">#}
+{#                        <div class="booking-box">#}
+{#                            <div class="head-box">#}
+{#                                <h4>Hotel Booking Form</h4>#}
+{#                            </div>#}
+{#                            <div class="booking-inner clearfix">#}
+{#                                <form action="{% url 'create_booking' %}" class="form1 clearfix" method="post">#}
+{#                                {% csrf_token %}#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-lg-6 col-md-12">#}
+{#                                            <div class="input1_wrapper">#}
+{#                                                <label>Check in</label>#}
+{#                                                <div class="input1_inner">#}
+{#                                                    <input type="text" class="form-control input datepicker" name="from" placeholder="Check in">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-lg-6 col-md-12">#}
+{#                                            <div class="input1_wrapper">#}
+{#                                                <label>Check out</label>#}
+{#                                                <div class="input1_inner">#}
+{#                                                    <input type="text" class="form-control input datepicker" name="to" placeholder="Check out">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-lg-6 col-md-12">#}
+{#                                            <div class="select1_wrapper">#}
+{#                                                <label>Adults</label>#}
+{#                                                <div class="select1_inner">#}
+{#                                                    <select class="select2 select select2-hidden-accessible" name="number" style="width: 100%" data-select2-id="1" tabindex="-1" aria-hidden="true">#}
+{#                                                        <option value="0" data-select2-idid="3">Nuber</option>#}
+{#                                                        {% for room in number %}#}
+{#                                                            <option value="{{ room.id }}">{{ room.number }}</option>#}
+{#                                                        {% endfor %}#}
+{#                                                        <option value="2" data-select2-id="21">2</option>#}
+{#                                                        <option value="3" data-select2-id="22">3</option>#}
+{#                                                        <option value="4" data-select2-id="23">4</option>#}
+{#                                                    </select>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-lg-6 col-md-12">#}
+{#                                            <div class="select1_wrapper">#}
+{#                                                <label>Children</label>#}
+{#                                                <div class="select1_inner">#}
+{#                                                    <select class="select2 select" name="beds" style="width: 100%">#}
+{#                                                        <option value="0">Beds</option>#}
+{#                                                        {% for room in bed %}#}
+{#                                                            <option value= "{{ room.id }}">{{ room.number_of_beds }}</option>#}
+{#                                                        {% endfor %}#}
+{#                                                        <option value="2">2</option>#}
+{#                                                        <option value="3">3</option>#}
+{#                                                        <option value="4">4</option>#}
+{#                                                    </select>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-lg-12 col-md-12">#}
+{#                                            <button type="submit" class="btn-form1-submit mt-15">{% url 'restaurant' %}</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{##}
+{#                                </form>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+
+

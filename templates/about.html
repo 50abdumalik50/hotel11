@@ -1,0 +1,374 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>The Cappa Boutique Hotel</title>
+    <link rel="shortcut icon" href="{% static 'media/img/favicon.png' %}">
+{#    <link rel="stylesheet" href="../../../../css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">#}
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewbox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+        </svg>
+    </div>
+    <!-- Navbar -->
+    {% include 'base/header.html' %}
+    <!-- Header Banner -->
+    <div class="banner-header section-padding valign bg-img bg-fixed bg-position-bottom" data-overlay-dark="6" data-background="../static/img/slider/1.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center caption mt-90">
+                    <h1>About Us</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About -->
+    <section class="about section-padding pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-30 animate-box" data-animate-effect="fadeInUp">
+                    <div class="section-subtitle">About Us</div>
+                    <div class="section-title">A Boutique Hotel in the heart of New York</div>
+                    <p>Welcome to our boutique hotel in the heart of New York City! We offer stylish rooms, personalized service, and a prime location. You'll be within walking distance of the best restaurants, shops, and attractions in Manhattan. Enjoy comfort and luxury right in the city's center.</p>
+{#                    <p>Hotel ut nisl quam nestibulum ac quam nec odio elementum sceisue the aucan ligulation. Orci varius natoque penatibus et magnis dis parturient monte naete ridiculus mus nellentesque habitant morbine.</p>#}
+                    <div class="reservations mb-30">
+                        <div class="icon"><span class="flaticon-call"></span></div>
+                        <div class="text">
+                            <p class="color-2">For information</p> <a href="tel:855-100-4444">996 552 843 600</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 animate-box" data-animate-effect="fadeInUp"> <img src="../static/img/about.jpg" alt="" class="mt-90 mb-30"> </div>
+                <div class="col-lg-3 col-md-6 animate-box" data-animate-effect="fadeInUp"> <img src="../static/img/about2.jpg" alt=""> </div>
+            </div>
+        </div>
+    </section>
+    <!-- Story -->
+    <section class="about section-padding">
+        <div class="container">
+            <div class="row mb-120">
+                <div class="col-lg-6 col-md-12 animate-box" data-animate-effect="fadeInLeft">
+                    <div class="img left"> <img src="../static/img/about3.jpg" alt=""> </div>
+                </div>
+                <div class="col-lg-6 col-md-12 valign animate-box" data-animate-effect="fadeInRight">
+                    <div class="content">
+                        <div class="cont text-left">
+                            <h6>Since 2007</h6>
+                            <h4>The Story of Behind Our Boutique</h4>
+                            <p>Welcome to our boutique hotel in the heart of New York City. Founded by passionate hoteliers, our hotel combines modern elegance with the city's rich history. We strive to create unforgettable experiences through personalized service and carefully selected decor.</p>
+{#                            <p>Since nissuam nestibulum duru quam nec odio elementum ceisue the misso varius natoque penatibus et magnis dis monte. Donec tuis in the velition florya id velit ac in the miss arcu posuere blane.</p>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-12 order2 valign animate-box" data-animate-effect="fadeInLeft">
+                    <div class="content">
+                        <div class="cont text-left">
+                            <h6>Eat & Drink</h6>
+                            <h4>Restaurant & Bar</h4>
+                            <p>At our boutique hotel, you'll find an exquisite restaurant and bar offering a unique culinary experience. Savor locally sourced dishes. Our stylish and inviting interior in the heart of Manhattan is suitable for breakfast, lunch and late-night lounging.</p>
+{#                            <p>Event nissuam nestibulum duru quam nec odio elementum ceisue the misso varius natoque penatibus et magnis dis monte. Donec tuis in the velition florya id velit ac in the miss arcu posuere blane.</p>#}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 order1 animate-box" data-animate-effect="fadeInRight">
+                    <div class="img"> <img src="../static/img/about4.jpg" alt=""> </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Promo Video -->
+    <section class="video-wrapper video section-padding bg-img bg-fixed" data-overlay-dark="5" data-background="../static/img/slider/1.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center"> <span><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i></span>
+                    <div class="section-subtitle"><span>Boutique Hotel</span></div>
+                    <div class="section-title"><span>Promotional Video</span></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center col-md-12">
+                    <a class="vid" href="https://youtu.be/er2-6hpDWV0">
+                        <div class="vid-butn"> <span class="icon">
+                                <i class="ti-control-play"></i>
+                            </span> </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Team -->
+    <section class="team section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="section-subtitle">Professionals</div>
+                    <div class="section-title">Meet Our Team</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 owl-carousel owl-theme">
+                    <div class="item">
+                        <div class="img"> <img src="../static/img/team/4.jpg" alt=""> </div>
+                        <div class="info">
+                            <h6>Valentina Karla</h6>
+                            <p>General Manager</p>
+                            <div class="social valign">
+                                <div class="full-width"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-facebook"></i></a> <a href="#"><i class="ti-pinterest"></i></a>
+                                    <p>valentina@hotel.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="img"> <img src="../static/img/team/1.jpg" alt=""> </div>
+                        <div class="info">
+                            <h6>Micheal White</h6>
+                            <p>Guest Service Department</p>
+                            <div class="social valign">
+                                <div class="full-width"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-facebook"></i></a> <a href="#"><i class="ti-pinterest"></i></a>
+                                    <p>micheal@hotel.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="img"> <img src="../static/img/team/2.jpg" alt=""> </div>
+                        <div class="info">
+                            <h6>Olivia Martin</h6>
+                            <p>Reservations Manager</p>
+                            <div class="social valign">
+                                <div class="social valign">
+                                    <div class="full-width"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-facebook"></i></a> <a href="#"><i class="ti-pinterest"></i></a>
+                                        <p>olivia@hotel.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="img"> <img src="../static/img/team/5.jpg" alt=""> </div>
+                        <div class="info">
+                            <h6>Mariana Dana</h6>
+                            <p>F&B Manager</p>
+                            <div class="social valign">
+                                <div class="full-width"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-facebook"></i></a> <a href="#"><i class="ti-pinterest"></i></a>
+                                    <p>mariana@hotel.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="img"> <img src="../static/img/team/3.jpg" alt=""> </div>
+                        <div class="info">
+                            <h6>Enrico Brown</h6>
+                            <p>Head Chef</p>
+                            <div class="social valign">
+                                <div class="full-width"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-facebook"></i></a> <a href="#"><i class="ti-pinterest"></i></a>
+                                    <p>enrico@hotel.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="img"> <img src="../static/img/team/6.jpg" alt=""> </div>
+                        <div class="info">
+                            <h6>Victoria Dan</h6>
+                            <p>Meetings and Events Manager</p>
+                            <div class="social valign">
+                                <div class="full-width"> <a href="#"><i class="ti-instagram"></i></a> <a href="#"><i class="ti-twitter"></i></a> <a href="#"><i class="ti-facebook"></i></a> <a href="#"><i class="ti-pinterest"></i></a>
+                                    <p>victoria@hotel.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Facilties -->
+    <section class="facilties section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center mb-30">
+                    <div class="section-subtitle">Our Services</div>
+                    <div class="section-title">Hotel Facilities</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp"> <span class="flaticon-world"></span>
+                        <h5>Pick Up & Drop</h5>
+                        <p>We’ll pick up from airport while you comfy on your ride.</p>
+                        <div class="facility-shape"> <span class="flaticon-world"></span> </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp"> <span class="flaticon-car"></span>
+                        <h5>Parking Space</h5>
+                        <p>You can come by car we have a free parking space.</p>
+                        <div class="facility-shape"> <span class="flaticon-car"></span> </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp"> <span class="flaticon-bed"></span>
+                        <h5>Room Service</h5>
+                        <p>Providing a high standard of service, our hotel ensures your stay is as comfortable as possible.</p>
+                        <div class="facility-shape"> <span class="flaticon-bed"></span> </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp"> <span class="flaticon-swimming"></span>
+                        <h5>Swimming Pool</h5>
+                        <p>Our hotel offers a magnificent swimming pool with Jacuzzi and children's pool. Towels are provided..</p>
+                        <div class="facility-shape"> <span class="flaticon-swimming"></span> </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp"> <span class="flaticon-wifi"></span>
+                        <h5>High-speed internet</h5>
+                        <p>Free high-speed Wi-Fi is available throughout the hotel.</p>
+                        <div class="facility-shape"> <span class="flaticon-wifi"></span> </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-facility animate-box" data-animate-effect="fadeInUp"> <span class="flaticon-breakfast"></span>
+                        <h5>Breakfast</h5>
+                        <p>Complimentary breakfast buffet with hot entrees, fruit and pastries.</p>
+                        <div class="facility-shape"> <span class="flaticon-breakfast"></span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Testiominals -->
+{#    <section class="background bg-img bg-fixed section-padding pb-0" data-background="img/slider/1.jpg" data-overlay-dark="5">#}
+{#        <div class="container">#}
+{#            <div class="row justify-content-center">#}
+{#                <div class="col-lg-8 col-md-12 text-center">#}
+{#                    <div class="testimonials">#}
+{#                        <div class="testimonials-box">#}
+{#                            <div class="owl-carousel owl-theme">#}
+{#                                <div class="item"> <span>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                    </span>#}
+{#                                    <h5>Highly recommended!</h5>#}
+{#                                    <p>Lorem dapibus asue metus the nec feusiate eraten miss hendreri net ve ante the lemon sanleo nectan feugiat erat hendrerit necuis ve ante viventa miss sapien silver on the duiman lorem ipsum amet silver miss rana duru at finibus viverra neca the sene on satien.</p>#}
+{#                                    <div class="info">#}
+{#                                        <div class="author-img"> <img src="../static/img/team/1.jpg" alt=""> </div>#}
+{#                                        <div class="cont">#}
+{#                                            <h6>Andreas Brown</h6> <span>Customer review</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item"> <span>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                    </span>#}
+{#                                    <h5>A Unique Boutique Hotel!</h5>#}
+{#                                    <p>Lorem dapibus asue metus the nec feusiate eraten miss hendreri net ve ante the lemon sanleo nectan feugiat erat hendrerit necuis ve ante viventa miss sapien silver on the duiman lorem ipsum amet silver miss rana duru at finibus viverra neca the sene on satien.</p>#}
+{#                                    <div class="info">#}
+{#                                        <div class="author-img"> <img src="../static/img/team/2.jpg" alt=""> </div>#}
+{#                                        <div class="cont">#}
+{#                                            <h6>Emily White</h6> <span>Customer review</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="item"> <span>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                        <i class="star-rating"></i>#}
+{#                                    </span>#}
+{#                                    <h5>Highly recommended!</h5>#}
+{#                                    <p>Lorem dapibus asue metus the nec feusiate eraten miss hendreri net ve ante the lemon sanleo nectan feugiat erat hendrerit necuis ve ante viventa miss sapien silver on the duiman lorem ipsum amet silver miss rana duru at finibus viverra neca the sene on satien.</p>#}
+{#                                    <div class="info">#}
+{#                                        <div class="author-img"> <img src="../static/img/team/3.jpg" alt=""> </div>#}
+{#                                        <div class="cont">#}
+{#                                            <h6>Daniel Martin</h6> <span>Customer review</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+    <!-- Clients -->
+    <section class="clients">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                <div class="owl-carousel owl-theme">
+                    <div class="clients-logo">
+                        <a href="#0"><img src="../static/img/clients/1.png" alt=""></a>
+                    </div>
+                    <div class="clients-logo">
+                        <a href="#0"><img src="../static/img/clients/2.png" alt=""></a>
+                    </div>
+                    <div class="clients-logo">
+                        <a href="#0"><img src="../static/img/clients/3.png" alt=""></a>
+                    </div>
+                    <div class="clients-logo">
+                        <a href="#0"><img src="../static/img/clients/4.png" alt=""></a>
+                    </div>
+                    <div class="clients-logo">
+                        <a href="#0"><img src="../static/img/clients/5.png" alt=""></a>
+                    </div>
+                    <div class="clients-logo">
+                        <a href="#0"><img src="../static/img/clients/6.png" alt=""></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.0.min.js' %}"></script>
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/jquery.isotope.v3.0.2.js' %}"></script>
+    <script src="{% static 'js/pace.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/scrollIt.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'js/YouTubePopUp.js' %}"></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/datepicker.js' %}"></script>
+    <script src="{% static 'js/smooth-scroll.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

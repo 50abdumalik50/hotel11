@@ -1,0 +1,62 @@
+   <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="footer-column footer-about">
+                            <h3 class="footer-title">About Hotel</h3>
+                            <p class="footer-about-text">Welcome to the best five-star deluxe hotel in New York.</p>
+                            <div class="footer-language"> <i class="lni ti-world"></i>
+                                <select onchange="location = this.value;">
+                                    <option value="http://duruthemes.com/">English</option>
+{#                                    <option value="http://duruthemes.com/">Russia</option>#}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 offset-md-1">
+                        <div class="footer-column footer-explore clearfix">
+                            <h3 class="footer-title">Explore</h3>
+                            <ul class="footer-explore-list list-unstyled">
+                                <li><a href="{%  url 'index' %}">Home</a></li>
+                                <li><a href="{%  url 'rooms_list' %}">Rooms & Suites</a></li>
+                                <li><a href="{%  url 'restaurant' %}">Restaurant</a></li>
+{#                                <li><a href="spa-wellness.html">Spa & Wellness</a></li>#}
+                                <li><a href="{% url 'about' %}">About Hotel</a></li>
+                                <li><a href="{% url 'contact' %}">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-column footer-contact">
+                            <h3 class="footer-title">Contact</h3>
+                            <p class="footer-contact-text">1616 Broadway NY, New York 10001
+                                <br>United States of America
+                            </p>
+                            <div class="footer-contact-info">
+                                <p class="footer-contact-phone"><span class="flaticon-call"></span> 996 552 843 600</p>
+                                <p class="footer-contact-mail">info@boutique.com</p>
+                            </div>
+                            <div class="footer-about-social-list"> <a href="https://www.instagram.com/hotelnewyork?igsh=MWlobHZtMGNoemZiMg=="><i class="ti-instagram"></i></a>
+{#                                <a href="#"><i class="ti-twitter"></i></a> #}
+                                <a href="https://www.youtube.com/watch?v=er2-6hpDWV0&source_ve_path=MjM4NTE&feature=emb_title"><i class="ti-youtube"></i></a>
+                                <a href="https://www.facebook.com/ThePlazaHotel?mibextid=ZbWKwL"><i class="ti-facebook"></i></a>
+{#                                <a href="#"><i class="ti-pinterest"></i></a> #}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer-bottom-inner">
+                            <p class="footer-bottom-copy-right">© Copyright 2024 by <a href="#">Abdumalik.com</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>

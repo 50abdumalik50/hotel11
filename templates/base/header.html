@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo-wrapper">
+            <a class="logo" href="{%  url 'index' %}"> <img src="../../static/img/logo.png" class="logo-img" alt=""> </a>
+            <!-- <a class="logo" href="index.html"> <h2>THE CAPPA <span>Boutique Hotel</span></h2> </a> -->
+        </div>
+        <!-- Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"><i class="ti-menu"></i></span> </button>
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown"> <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Home <i class="ti-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{%  url 'index' %}" class="dropdown-item active"><span>Home</span></a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Rooms & Suites <i class="ti-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{%  url 'rooms_list' %}" class="dropdown-item"><span>Rooms</span></a></li>
+{#                        <li><a href="rooms2.html" class="dropdown-item"><span>Rooms 2</span></a></li>#}
+                        {% for room in rooms %}
+                            <li><a href="{% url 'room_details_AS' room.pk %}" class="dropdown-item"><span>{{ room.pk }}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'restaurant' %}">Restaurant</a></li>
+{#                <li class="nav-item"><a class="nav-link" href="spa-wellness.html">Spa</a></li>#}
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Pages <i class="ti-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'service' %}" class="dropdown-item"><span>Services</span></a></li>
+                        <li><a href="{% url 'facilities' %}" class="dropdown-item"><span>Facilities</span></a></li>
+{#                        <li><a href="{% url 'register' %}" class="dropdown-item"><span>Register</span></a></li>#}
+                        <li><a href="{% url 'team' %}" class="dropdown-item"><span>Team</span></a></li>
+{#                        <li><a href="{% url 'register' %}" class="dropdown-item"><span>Register</span></a></li>#}
+{#                        <li><a href="{% url 'login' %}" class="dropdown-item"><span>Login</span></a></li>#}
+{#                        <li><a href="{% url 'logout' %}" class="dropdown-item"><span>Logout</span></a></li>#}
+{#                        <li class="dropdown-submenu dropdown"> <a class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" href="#"><span>Other Pages <i class="ti-angle-right"></i></span></a>#}
+{#                            <ul class="dropdown-menu">#}
+{#                                <li><a href="404.html" class="dropdown-item"><span>404 Page</span></a></li>#}
+{#                                <li><a href="coming-soon.html" class="dropdown-item"><span>Coming Soon</span></a></li>#}
+{#                            </ul>#}
+{#                        </li>#}
+                    </ul>
+                </li>
+                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">News <i class="ti-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'post_list' %}" class="dropdown-item"><span>News 1</span></a></li>
+{#                            <li><a href="news2.html" class="dropdown-item"><span>News 2</span></a></li>#}
+                             {% for post in news %}
+                                <li><a href="{% url 'post_detail' pk=post.pk %}" class="dropdown-item"><span>Post Page</span></a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Register <i class="ti-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            {% if not user.is_authenticated %}
+                        <li><a href="{% url 'register' %}" class="dropdown-item"><span>Регистрация</span></a></li>
+                            <li><a href="{% url 'login' %}" class="dropdown-item"><span>Войти</span></a></li>
+                        {% else %}
+                            <li><a href="{% url 'logout' %}" class="dropdown-item"><span>Выйти</span></a></li>
+                        {% endif %}
+                        </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

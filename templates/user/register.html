@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>Registration Form</title>
+		<link rel="stylesheet" href="../../static/css/register.css">
+	</head>
+
+	<body>
+    {% include 'base/header.html' %}
+		<div class="main" style="align-content: center">
+{#            {% if messages %}#}
+{#                <ul>#}
+{#                    {% for message in messages %}#}
+{#                        <li>{{ message }}</li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            {% endif %}#}
+			<h2>Registration</h2>
+			<form method="post">
+                {% csrf_token %}
+                <label for="first"
+                    >Username:</label
+                >
+                {{ form.username }}
+                <label for="email">Email:</label>
+                {{ form.email }}
+                <label for="password1">Password:</label>
+                {{ form.password1 }}
+                <label for="password2">Confirm Password:</label>
+                {{ form.password2 }}
+				<button type="submit">
+					Register
+				</button>
+			</form>
+		</div>
+    {% include 'base/footer.html' %}
+	</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>The Cappa Boutique Hotel</title>
+    <link rel="shortcut icon" href="{% static 'media/img/favicon.png' %}">
+{#    <link rel="stylesheet" href="../../../../css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">#}
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewbox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+        </svg>
+    </div>
+    <!-- Navbar -->
+    {% include 'base/header.html' %}
+    <!-- Header Banner -->
+    <div class="banner-header section-padding valign bg-img bg-fixed bg-position-bottom" data-overlay-dark="6" data-background="../static/img/slider/1.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center caption mt-90">
+                    <span>
+                        <i class="star-rating"></i>
+                        <i class="star-rating"></i>
+                        <i class="star-rating"></i>
+                        <i class="star-rating"></i>
+                        <i class="star-rating"></i>
+                    </span>
+                    <h5>The Cappa Boutique Hotel</h5>
+                    <h1>Rooms & Suites</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Rooms 1 -->
+    <div class="rooms1 section-padding">
+        <div class="container">
+            <div class="row">
+                {% for room in rooms %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="square-flip">
+                        <div class="square bg-img" data-background="{{ room.image_for_room.url }}">
+{#                            <span class="category"><a href="{{ room.bookings.first }}"></a></span>#}
+                            <div class="square-container d-flex align-items-end justify-content-end">
+                                <div class="box-title">
+                                    <h6>{{ room.price }}$</h6>
+                                    <h4>{{ room.room_type.choices }}</h4>
+                                </div>
+                            </div>
+                            <div class="flip-overlay"></div>
+                        </div>
+                        <div class="square2">
+                            <div class="square-container2">
+                                <h6>{{ room.price }}$</h6>
+                                <h4>{{ room.room_type }}</h4>
+                                <p>Luxury room comfortable .</p>
+                                <div class="row room-facilities mb-15">
+                                    <div class="col-md-6">
+                                        <ul>
+                                            <li><i class="flaticon-group"></i>{{ room.number_of_beds }}</li>
+                                            <li><i class="flaticon-wifi"></i> Free Wifi</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul>
+                                            <li><i class="flaticon-bed"></i>{{ room.number }}</li>
+                                            <li><i class="flaticon-breakfast"></i>{{ room.bookings.first }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="butn-dark"> <a href="{% url 'room_details_AS' room.pk %}"><span>Details</span></a> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Reservation & Booking Form -->
+{#    <section class="reservation">#}
+{#        <div class="background bg-img bg-fixed valign section-padding" data-background="img/slider/1.jpg" data-overlay-dark="5">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <!-- Reservation -->#}
+{#                    <div class="col-md-5 mb-30 mt-30">#}
+{#                        <p><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i></p>#}
+{#                        <h5>Each of our guest rooms feature a private bath, wi-fi, cable television and include full breakfast.</h5>#}
+{#                        <div class="reservations mb-30">#}
+{#                            <div class="icon"><span class="flaticon-call"></span></div>#}
+{#                            <div class="text">#}
+{#                                <p>Reservation</p> <a href="tel:855-100-4444">855 100 4444</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <!-- Booking From -->#}
+{#                    <div class="col-md-6 offset-md-1">#}
+{#                        <div class="booking-box">#}
+{#                            <div class="head-box">#}
+{#                                <h4>Hotel Booking Form</h4>#}
+{#                            </div>#}
+{#                            <div class="booking-inner clearfix">#}
+{#                                <form action="{% url 'create_booking' %}" class="form1 clearfix" method="post">#}
+{#                                {% csrf_token %}#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-lg-6 col-md-12">#}
+{#                                            <div class="input1_wrapper">#}
+{#                                                <label>Check in</label>#}
+{#                                                <div class="input1_inner">#}
+{#                                                    <input type="text" class="form-control input datepicker" name="from" placeholder="Check in">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-lg-6 col-md-12">#}
+{#                                            <div class="input1_wrapper">#}
+{#                                                <label>Check out</label>#}
+{#                                                <div class="input1_inner">#}
+{#                                                    <input type="text" class="form-control input datepicker" name="to" placeholder="Check out">#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-lg-6 col-md-12">#}
+{#                                            <div class="select1_wrapper">#}
+{#                                                <label>Adults</label>#}
+{#                                                <div class="select1_inner">#}
+{#                                                    <select class="select2 select select2-hidden-accessible" name="number" style="width: 100%" data-select2-id="1" tabindex="-1" aria-hidden="true">#}
+{#                                                        <option value="0" data-select2-idid="3">Nuber</option>#}
+{#                                                        {% for room in number %}#}
+{#                                                            <option value="{{ room.id }}">{{ room.number }}</option>#}
+{#                                                        {% endfor %}#}
+{#                                                        <option value="2" data-select2-id="21">2</option>#}
+{#                                                        <option value="3" data-select2-id="22">3</option>#}
+{#                                                        <option value="4" data-select2-id="23">4</option>#}
+{#                                                    </select>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-lg-6 col-md-12">#}
+{#                                            <div class="select1_wrapper">#}
+{#                                                <label>Children</label>#}
+{#                                                <div class="select1_inner">#}
+{#                                                    <select class="select2 select" name="beds" style="width: 100%">#}
+{#                                                        <option value="0">Beds</option>#}
+{#                                                        {% for room in bed %}#}
+{#                                                            <option value= "{{ room.id }}">{{ room.number_of_beds }}</option>#}
+{#                                                        {% endfor %}#}
+{#                                                        <option value="2">2</option>#}
+{#                                                        <option value="3">3</option>#}
+{#                                                        <option value="4">4</option>#}
+{#                                                    </select>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-lg-12 col-md-12">#}
+{#                                            <button type="submit" class="btn-form1-submit mt-15">Check Availability</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{##}
+{#                                </form>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.0.min.js' %}"></script>
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/jquery.isotope.v3.0.2.js' %}"></script>
+    <script src="{% static 'js/pace.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/scrollIt.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'js/YouTubePopUp.js' %}"></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/datepicker.js' %}"></script>
+    <script src="{% static 'js/smooth-scroll.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

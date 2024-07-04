@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>The Cappa Boutique Hotel</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+{#    <link rel="stylesheet" href="../../../../css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">#}
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewbox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+        </svg>
+    </div>
+    <!-- Navbar -->
+    {% include 'base/header.html' %}
+    <!-- Kenburns Slider -->
+    <aside class="kenburns-section" id="kenburnsSliderContainer" data-overlay-dark="3">
+        <div class="kenburns-inner h-100">
+            <div class="v-middle caption text-center">
+                <div class="container">
+                    <div class="row h-100 justify-content-center">
+                        <div class="col-lg-10 col-md-12">
+                            <h4>Welcome to New York</h4>
+                            <h1>The Best Five-Star Luxury Boutique Hotel</h1>
+                            <div class="butn-dark"> <a href="{% url 'rooms_list' %}"><span>Discover Rooms</span></a> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- reservation -->
+        <div class="reservation">
+            <a href="tel:8551004444">
+                <div class="icon d-flex justify-content-center align-items-center"> <i class="flaticon-call"></i> </div>
+                <div class="call"><span>996 552 8400</span>
+                    <br>Reservation
+                </div>
+            </a>
+        </div>
+        <!-- arrow down -->
+        <div class="arrow bounce text-center">
+{#            <a href="#" data-scroll-nav="1" class=""> <i class="ti-arrow-down"></i> </a>#}
+        </div>
+    </aside>
+
+    <!-- jQuery -->
+{#    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>#}
+    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.0.min.js' %}"></script>
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/jquery.isotope.v3.0.2.js' %}"></script>
+    <script src="{% static 'js/pace.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/scrollIt.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'js/YouTubePopUp.js' %}"></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/datepicker.js' %}"></script>
+    <script src="{% static 'js/smooth-scroll.min.js' %}"></script>
+    <script src="{%  static 'js/vegas.slider.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <!-- Vegas Background Slideshow (vegas.slider kenburns) -->
+    <script>
+        $(document).ready(function() {
+            $('#kenburnsSliderContainer').vegas({
+                slides: [{
+                    src: "../static/img/slider/1.jpg"
+                }, {
+                    src: "../static/img/slider/2.jpg"
+                }, {
+                    src: "../static/img/slider/1.jpg"
+                }],
+                overlay: true,
+                transition: 'fade2',
+                animation: 'kenburnsUpRight',
+                transitionDuration: 1000,
+                delay: 10000,
+                animationDuration: 20000
+            });
+        });
+
+    </script>
+</body>
+</html>

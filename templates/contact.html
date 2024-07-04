@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>The Cappa Boutique Hotel</title>
+    <link rel="shortcut icon" href="{% static 'media/img/favicon.png' %}">
+{#    <link rel="stylesheet" href="../../../../css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">#}
+    <link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewbox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+        </svg>
+    </div>
+    <!-- Navbar -->
+    {% include 'base/header.html' %}
+    <!-- Header Banner -->
+    <div class="banner-header section-padding valign bg-img bg-fixed bg-position-bottom" data-overlay-dark="6" data-background="../static/img/slider/1.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center caption mt-90">
+                    <h1>Contact Us</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact -->
+{#    <section class="contact section-padding">#}
+{#        <div class="container">#}
+{#            <div class="row mb-90">#}
+{#                <div class="col-lg-5 col-md-12 mb-60">#}
+{#                    <h3>The Cappa Boutique Hotel</h3>#}
+{#                    <p>Hotel ut nisl quam nestibulum ac quam nec odio elementum miss the aucan varius natoque penatibus et magnis morbine.</p>#}
+{#                    <div class="reservations mb-30">#}
+{#                        <div class="icon"><span class="flaticon-call"></span></div>#}
+{#                        <div class="text">#}
+{#                            <p>Reservation</p> <a href="tel:855-100-4444">855 100 4444</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="reservations mb-30">#}
+{#                        <div class="icon"><span class="flaticon-envelope"></span></div>#}
+{#                        <div class="text">#}
+{#                            <p>Email Info</p> <a href="mailto:info@boutique.com">info@boutique.com</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="reservations">#}
+{#                        <div class="icon"><span class="flaticon-location-pin"></span></div>#}
+{#                        <div class="text">#}
+{#                            <p>Address</p> 1616 Broadway NY, New York 10001#}
+{#                            <br>United States of America#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-lg-6 offset-lg-1 col-md-12 mb-30">#}
+{#                    <h3>Get in touch</h3>#}
+{#                    <form method="post" class="contact__form" action="mail.php">#}
+{#                        <!-- form message -->#}
+{#                        <div class="row">#}
+{#                            <div class="col-12">#}
+{#                                <div class="alert alert-success contact__msg" style="display: none" role="alert"> Your message was sent successfully. </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <!-- form elements -->#}
+{#                        <div class="row">#}
+{#                            <div class="col-md-6 form-group">#}
+{#                                <input name="name" type="text" placeholder="Your Name *" required="">#}
+{#                            </div>#}
+{#                            <div class="col-md-6 form-group">#}
+{#                                <input name="email" type="email" placeholder="Your Email *" required="">#}
+{#                            </div>#}
+{#                            <div class="col-md-6 form-group">#}
+{#                                <input name="phone" type="text" placeholder="Your Number *" required="">#}
+{#                            </div>#}
+{#                            <div class="col-md-6 form-group">#}
+{#                                <input name="subject" type="text" placeholder="Subject *" required="">#}
+{#                            </div>#}
+{#                            <div class="col-md-12 form-group">#}
+{#                                <textarea name="message" id="message" cols="30" rows="4" placeholder="Message *" required=""></textarea>#}
+{#                            </div>#}
+{#                            <div class="col-md-12">#}
+{#                                <button type="submit" class="butn-dark2"><span>Send Message</span></button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
+{#            <!-- Map Section -->#}
+{#            <div class="row">#}
+{#                <div class="col-md-12 map animate-box" data-animate-effect="fadeInUp">#}
+{#                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1573147.7480448114!2d-74.84628175962355!3d41.04009641088412!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25856139b3d33%3A0xb2739f33610a08ee!2s1616%20Broadway%2C%20New%20York%2C%20NY%2010019%2C%20Amerika%20Birle%C5%9Fik%20Devletleri!5e0!3m2!1str!2str!4v1646760525018!5m2!1str!2str" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy"></iframe>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+    <!-- Reservation & Booking Form -->
+    {% include 'base/booking_form.html' %}
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.0.min.js' %}"></script>
+    <script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'js/jquery.isotope.v3.0.2.js' %}"></script>
+    <script src="{% static 'js/pace.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/scrollIt.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.js' %}"></script>
+    <script src="{% static 'js/YouTubePopUp.js' %}"></script>
+    <script src="{% static 'js/select2.js' %}"></script>
+    <script src="{% static 'js/datepicker.js' %}"></script>
+    <script src="{% static 'js/smooth-scroll.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

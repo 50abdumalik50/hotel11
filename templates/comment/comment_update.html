@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Comment</title>
+</head>
+<body>
+
+{% include 'base/header.html' %}
+
+<div class="container">
+    <h1>Update Comment</h1>
+
+    <form action="{% url 'comment_update' object.pk %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_text">Text:</label>
+            <input type="text" id="id_text" name="text" class="form-control" value="{{ object.text }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Update Comment</button>
+    </form>
+</div>
+
+{% include 'base/footer.html' %}
+
+</body>
+</html>
+
+
+

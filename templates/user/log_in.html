@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+
+<html>
+
+<head>
+      <title>HTML Login Form</title>
+      <link rel="stylesheet" href="../../static/css/log_in.css">
+</head>
+
+<body>
+
+    {% include 'base/header.html' %}
+      <div class="main">
+            <h1>Войти</h1>
+            <h3> </h3>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+            <p>Нет аккаунта ?
+                  <a href="../../account/register/"
+                     style="text-decoration: none;">
+                        Создать аккаунт
+                  </a>
+            </p>
+      </div>
+    {% include 'base/footer.html' %}
+</body>
+
+</html>
+
+{% endblock %}
