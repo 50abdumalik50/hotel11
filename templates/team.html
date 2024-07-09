@@ -38,32 +38,58 @@
         </div>
     </div>
     <!-- Team -->
-    <section class="team section-padding">
-        <div class="container">
-            <div class="row">
-                {% for manager in team %}
-                <div class="col-lg-4 col-md-6">
-                    <div class="item">
-                        <div class="img"> <img src="{{ manager.image_for_team.url }}" alt=""> </div>
-                        <div class="info">
-                            <h6>{{ manager.name }}</h6>
-                            <p>{{ manager.occupation }}</p>
-                            <div class="social valign">
-                                <div class="full-width"> 
-                                   <a href="#"><i class="ti-instagram"></i></a> 
-                                   <a href="#"><i class="ti-twitter"></i></a> 
-                                   <a href="#"><i class="ti-facebook"></i></a> 
-                                   <a href="#"><i class="ti-pinterest"></i></a>
-                                   <p>valentina@hotel.com</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+
+<section class="team section-padding">
+  <div class="container">
+    <div class="row">
+      {% for manager in team %}
+      <div class="col-lg-4 col-md-6">
+        <div class="item">
+          <div class="img">
+            {% if manager.image_for_team %}
+            <img src="{{ manager.image_for_team.url }}" alt="{{ manager.name }}">
+            {% else %}
+            <img src="{% static 'path/to/default/image.jpg' %}" alt="{{ manager.name }}">
+            {% endif %}
+          </div>
+          <div class="info">
+            <h6>{{ manager.name }}</h6>
+            <p>{{ manager.occupation }}</p>
+            <div class="social valign">
+              <div class="full-width">
+                <a href="#"><i class="ti-instagram"></i></a>
+                <a href="#"><i class="ti-twitter"></i></a>
+                <a href="#"><i class="ti-facebook"></i></a>
+                <a href="#"><i class="ti-pinterest"></i></a>
+                <p>{{ manager.email }}</p>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
+        {% if request.user.is_superuser %}
+        <div>
+          <a href="{% url 'team-update' pk=manager.pk %}" class="btn btn-info">Update Team</a>
+        </div>
+        <div>
+          <a href="{% url 'team-delete' pk=manager.pk %}" class="btn btn-danger">Delete Team</a>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if request.user.is_superuser %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <a href="{% url 'team-create' %}" class="btn btn-primary">Create Team</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
     <!-- Testiominals -->
 {#    <section class="background bg-img bg-fixed section-padding pb-0" data-background="img/slider/1.jpg" data-overlay-dark="5">#}
 {#        <div class="container">#}

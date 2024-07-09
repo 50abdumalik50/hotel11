@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <h2>Обновить элемент меню ресторана</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+  </form>
+  <a href="{% url 'index' %}">Назад к меню</a>
+{% endblock %}

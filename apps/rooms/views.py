@@ -79,13 +79,13 @@ class RoomCreateView(generic.CreateView):
     form_class = RoomForm
     model = Room
     success_url = '/'
-    template_name = 'room_create.html'
+    template_name = 'room/room_create.html'
 
 
 class RoomUpdateView(generic.UpdateView):
     model = Room
     form_class = RoomForm
-    template_name = 'room_update.html'
+    template_name = 'room/room_update.html'
     success_url = '/'
 
     def form_valid(self, form):
@@ -103,7 +103,7 @@ class RoomDetailView(generic.DetailView):
 class RoomDeleteView(generic.DeleteView):
     model = Room
     pk_url_kwarg = 'pk'
-    template_name = 'room_delete.html'
+    template_name = 'room/room_delete.html'
     success_url = '/'
 
 

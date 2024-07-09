@@ -70,7 +70,7 @@
         </div>
     </section>
     <!-- Restaurant Menu -->
-   <section id="menu" class="restaurant-menu menu section-padding">
+<section id="menu" class="restaurant-menu menu section-padding">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -99,6 +99,13 @@
                                     <div class="menu-info">
                                         <h5>{{ item.name }} <span class="price">{{ item.price }}$</span></h5>
                                         <p>{{ item.description }}</p>
+                                        {% if user.is_staff %}
+                                        <a href="{% url 'restaurant_update' item.pk %}" class="btn btn-primary">Изменить</a>
+                                        <form method="post" action="{% url 'restaurant_delete' item.pk %}" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Удалить</button>
+                                        </form>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 {% endfor %}
@@ -109,6 +116,13 @@
                 </div>
             </div>
         </div>
+        {% if user.is_staff %}
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="{% url 'restaurant_create' %}" class="btn btn-success">Добавить новый элемент меню</a>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </section>
     <!-- Testiominals -->

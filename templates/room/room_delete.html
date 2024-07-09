@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4 text-center">Delete Room</h1>
+            <p>Are you sure you want to delete the room "{{ room }}"?</p>
+            <form method="post" class="form-horizontal">
+                {% csrf_token %}
+                <style>
+                    button[type="submit"],
+                    a.btn {
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        border-radius: 4px;
+                        text-align: center;
+                        margin: 5px;
+                    }
+
+                    button[type="submit"] {
+                        background-color: #dc3545; /* Цвет фона кнопки "Delete" */
+                        color: #fff; /* Цвет текста кнопки "Delete" */
+                        border: none; /* Без границы */
+                    }
+
+                    a.btn {
+                        background-color: #6c757d; /* Цвет фона кнопки "Back to Room List" */
+                        color: #fff; /* Цвет текста кнопки "Back to Room List" */
+                        border: none; /* Без границы */
+                    }
+                </style>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a href="{% url 'rooms_list' %}" class="btn btn-secondary">Back to Room List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

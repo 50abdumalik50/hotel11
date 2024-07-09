@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.posts.models import Post, PostImage
+from apps.news.models import Post, PostImage, Comment
 
 
 class PostCreateSerializer(serializers.ModelSerializer):
@@ -23,6 +23,13 @@ class PostListSerializer(serializers.ModelSerializer):
         ]
 
 
+class PostImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = PostImage
+        fields = '__all__'
+
+
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
@@ -31,4 +38,27 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'description',
             'created_at',
+        ]
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = [
+            'id',
+            'user',
+            'post',
+            'text',
+            'created_at',
+            'replay_comment',
+        ]
+
+class CommentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = [
+            'user',
+            'post',
+            'text',
+            'replay_comment',
         ]

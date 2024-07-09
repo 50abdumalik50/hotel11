@@ -1,39 +1,61 @@
 <!DOCTYPE html>
-
-{% extends 'base/base.html' %}
-
-{% block content %}
-
-
-<html>
-
+<html lang="en">
 <head>
-      <title>HTML Login Form</title>
-      <link rel="stylesheet" href="../../static/css/log_in.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .card {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+        .text-decoration-none {
+            text-decoration: none;
+        }
+    </style>
 </head>
-
 <body>
-
-    {% include 'base/header.html' %}
-      <div class="main">
-            <h1>Войти</h1>
-            <h3> </h3>
-
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Login</button>
-            </form>
-            <p>Нет аккаунта ?
-                  <a href="../../account/register/"
-                     style="text-decoration: none;">
-                        Создать аккаунт
-                  </a>
-            </p>
-      </div>
-    {% include 'base/footer.html' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Login</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_username">Username:</label>
+                            <input type="text" id="id_username" name="username" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password">Password:</label>
+                            <input type="password" id="id_password" name="password" class="form-control">
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        </div>
+                    </form>
+                    <p class="text-center">Don't have an account? <a href="../../account/register/" class="text-decoration-none">Create an account</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-
 </html>
+{#{% endblock %}#}
 
-{% endblock %}

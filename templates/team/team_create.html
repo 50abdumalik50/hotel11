@@ -1,0 +1,18 @@
+
+
+{% extends 'base/base.html' %}
+
+
+{% block content %}
+  <h2>Create Team</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create</button>
+  </form>
+
+  {% if form.instance.image_for_team %}
+    <h3>Team Image Preview:</h3>
+    <img src="{{ form.instance.image_for_team.url }}" alt="{{ form.instance.name }}">
+  {% endif %}
+{% endblock %}

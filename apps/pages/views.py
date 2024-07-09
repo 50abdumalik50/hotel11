@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.utils.dateparse import parse_date
 from django.views import generic
 from django.contrib import messages
@@ -17,11 +18,41 @@ class ServiceListView(generic.ListView):
     template_name = 'services.html'
 
 
-
 class TeamListView(generic.ListView):
     model = Team
     template_name = 'team.html'
     context_object_name = "team"
+
+
+class TeamCreateView(generic.CreateView):
+    form_class = TeamForm
+    model = Team
+    success_url = reverse_lazy('team')
+    template_name = 'team/team_create.html'
+
+
+class TeamUpdateView(generic.UpdateView):
+    model = Team
+    form_class = TeamForm
+    template_name = 'team/team_update.html'
+    success_url = reverse_lazy('team')
+    def form_valid(self, form):
+        room = form.save(commit=False)
+        room.save()
+        return super().form_valid(form)
+
+
+class TeamDetailView(generic.DetailView):
+    model = Team
+    template_name = 'team/team_detail.html'
+    pk_url_kwarg = 'pk'
+
+
+class TeamDeleteView(generic.DeleteView):
+    model = Team
+    pk_url_kwarg = 'pk'
+    template_name = 'team/team_delete.html'
+    success_url = reverse_lazy('team')
 
 
 

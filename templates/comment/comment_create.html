@@ -5,10 +5,10 @@
 <div class="container">
     <h1>Comments</h1>
 
-    <!-- Кнопка для просмотра комментариев -->
+    <!-- Button to view comments -->
     <button id="view-comments-btn" class="btn btn-secondary mb-2">View Comments</button>
 
-    <!-- Контейнер для комментариев, который будет скрыт по умолчанию -->
+    <!-- Comments container, hidden by default -->
     <div id="comments-container" style="display: none;">
         {% for comment in comments %}
         <div class="comment" id="comment-{{ comment.id }}">
@@ -17,17 +17,18 @@
             </div>
             <p class="comment-text">{{ comment.text }}</p>
 
-            <!-- Кнопки Edit и Delete -->
+            <!-- Edit and Delete buttons -->
             <div class="comment-actions mt-2">
                 {% if comment.user == request.user or request.user.is_superuser %}
                 <button class="btn btn-sm btn-outline-secondary edit-comment-btn" data-id="{{ comment.id }}">Edit</button>
                 <button class="btn btn-sm btn-outline-danger delete-comment-btn" data-id="{{ comment.id }}">Delete</button>
                 {% endif %}
-                <!-- Кнопка для ответа на комментарий -->
+                {% if user.is_authenticated %}
                 <button class="btn btn-sm btn-outline-primary reply-comment-btn" data-id="{{ comment.id }}">Reply</button>
+                {% endif %}
             </div>
 
-            <!-- Форма для редактирования комментария, скрытая по умолчанию -->
+            <!-- Edit comment form, hidden by default -->
             <form class="edit-comment-form mt-2" id="edit-comment-form-{{ comment.id }}" action="{% url 'comment_update' pk=comment.id %}" method="post" style="display: none;">
                 {% csrf_token %}
                 <div class="form-group">
@@ -37,7 +38,7 @@
                 <button type="submit" class="btn btn-primary btn-sm">Update Comment</button>
             </form>
 
-            <!-- Форма для ответа на комментарий, скрытая по умолчанию -->
+            <!-- Reply form, hidden by default -->
             <form class="reply-comment-form mt-2" id="reply-comment-form-{{ comment.id }}" action="{% url 'reply_create' %}" method="post" style="display: none;">
                 {% csrf_token %}
                 <input type="hidden" name="parent_id" value="{{ comment.id }}">
@@ -48,7 +49,7 @@
                 <button type="submit" class="btn btn-primary btn-sm">Add Reply</button>
             </form>
 
-            <!-- Контейнер для ответов -->
+            <!-- Replies container -->
             <div class="replies-container mt-2" id="replies-container-{{ comment.id }}">
                 {% for reply in comment.replies.all %}
                 <div class="reply" id="reply-{{ reply.id }}">
@@ -57,7 +58,7 @@
                     </div>
                     <p class="reply-text">{{ reply.text }}</p>
 
-                    <!-- Кнопки Edit и Delete для ответов -->
+                    <!-- Edit and Delete buttons for replies -->
                     <div class="reply-actions mt-2">
                         {% if reply.user == request.user or request.user.is_superuser %}
                         <button class="btn btn-sm btn-outline-secondary edit-reply-btn" data-id="{{ reply.id }}">Edit</button>
@@ -65,8 +66,8 @@
                         {% endif %}
                     </div>
 
-                    <!-- Форма для редактирования ответа, скрытая по умолчанию -->
-                    <form class="edit-reply-form mt-2" id="edit-reply-form-{{ reply.id }}" action="{% url 'reply_update' reply.id %}" method="post" style="display: none;">
+                    <!-- Edit reply form, hidden by default -->
+                    <form class="edit-reply-form mt-2" id="edit-reply-form-{{ reply.id }}" action="{% url 'reply_update' reply_id=reply.id %}" method="post" style="display: none;">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="id_reply_text_{{ reply.id }}">Text:</label>
@@ -81,7 +82,7 @@
         {% endfor %}
     </div>
 
-    <!-- Форма для добавления нового комментария, доступная только авторизованным пользователям -->
+    <!-- Form to add a new comment, only visible to authenticated users -->
     {% if user.is_authenticated %}
     <div class="add-comment-form mt-4">
         <h2>Add Comment</h2>
@@ -102,173 +103,214 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Показываем контейнер с комментариями и форму для добавления комментария при клике на кнопку "View Comments"
-        $('#view-comments-btn').click(function() {
-            $('#comments-container').show();
-            $('.add-comment-form').show();
-            $(this).hide();
-        });
-
-        // Показываем форму для редактирования комментария при клике на кнопку "Edit"
-        $(document).on('click', '.edit-comment-btn', function() {
-            var commentId = $(this).data('id');
-            $('#edit-comment-form-' + commentId).toggle();
-        });
-
-        // Показываем форму для ответа на комментарий при клике на кнопку "Reply"
-        $(document).on('click', '.reply-comment-btn', function() {
-            var commentId = $(this).data('id');
-            $('#reply-comment-form-' + commentId).toggle();
-        });
-
-        // Обработка отправки формы для редактирования комментария
-        $(document).on('submit', '.edit-comment-form', function(event) {
-            event.preventDefault();
-            var commentId = $(this).attr('id').split('-')[3];
-            var formData = $(this).serialize();
-
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    $('#comment-' + commentId + ' .comment-text').text(response.text);
-                    $('#edit-comment-form-' + commentId).hide();
-                },
-                error: function() {
-                    alert('An error occurred while updating the comment.');
-                }
-            });
-        });
-
-        // Обработка отправки формы для добавления нового комментария
-        $('#add-comment-form').submit(function(event) {
-            event.preventDefault();
-            var formData = $(this).serialize();
-
-            $.ajax({
-                url: "{% url 'comment_create' post_id=post.id %}",
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-                    var newComment = `
-                        <div class="comment" id="comment-${response.id}">
-                            <div class="comment-header">
-                                <span class="comment-user" style="color: yellow;">${response.username}</span>
-                            </div>
-                            <p class="comment-text">${response.text}</p>
-
-                            <!-- Кнопки Edit и Delete -->
-                            <div class="comment-actions mt-2">
-                                <button class="btn btn-sm btn-outline-secondary edit-comment-btn" data-id="${response.id}">Edit</button>
-                                <button class="btn btn-sm btn-outline-danger delete-comment-btn" data-id="${response.id}">Delete</button>
-                                <!-- Кнопка для ответа на комментарий -->
-                                <button class="btn btn-sm btn-outline-primary reply-comment-btn" data-id="${response.id}">Reply</button>
-                            </div>
-
-                            <!-- Форма для редактирования комментария, скрытая по умолчанию -->
-                            {% if response.id %}
-                            <form class="edit-comment-form mt-2" id="edit-comment-form-${response.id}" action="{% url 'comment_update' pk=response.id %}" method="post" style="display: none;">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="id_text_${response.id}">Text:</label>
-                                    <input type="text" id="id_text_${response.id}" name="text" class="form-control" value="${response.text}" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-sm">Update Comment</button>
-                            </form>
-                            {% endif %}
-
-                            <!-- Форма для ответа на комментарий, скрытая по умолчанию -->
-                            <form class="reply-comment-form mt-2" id="reply-comment-form-${response.id}" action="{% url 'reply_create' %}" method="post" style="display: none;">
-                                {% csrf_token %}
-                                <input type="hidden" name="parent_id" value="${response.id}">
-                                <div class="form-group">
-                                    <label for="id_reply_text_${response.id}">Reply:</label>
-                                    <textarea id="id_reply_text_${response.id}" name="text" class="form-control" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-sm">Add Reply</button>
-                            </form>
-
-                            <!-- Контейнер для ответов -->
-                            <div class="replies-container mt-2" id="replies-container-${response.id}">
-                                <!-- Здесь будут отображаться ответы -->
-                            </div>
-                        </div>
-                    `;
-                    $('#comments-container').append(newComment);
-                    $('#id_text').val('');  // Очищаем текстовое поле
-
-                    // После добавления нового комментария, привязываем обработчики событий к его кнопкам "Edit", "Delete" и "Reply"
-                    $('#comment-' + response.id).find('.edit-comment-btn').click(function() {
-                        $('#edit-comment-form-' + response.id).toggle();
-                    });
-
-                    $('#comment-' + response.id).find('.reply-comment-btn').click(function() {
-                        $('#reply-comment-form-' + response.id).toggle();
-                    });
-
-                },
-                error: function() {
-                    alert('An error occurred while adding the comment.');
-                }
-            });
-        });
-
-        // Удаление комментария
-        $(document).on('click', '.delete-comment-btn', function(event) {
-            event.preventDefault();
-            var commentId = $(this).data('id');
-            var url = "{% url 'comment_delete' 0 %}".replace('0', commentId);
-
-            if (confirm('Are you sure you want to delete this comment?')) {
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        'csrfmiddlewaretoken': '{{ csrf_token }}'
-                    },
-                    success: function(response) {
-                        $('#comment-' + commentId).remove(); // Удаляем комментарий из DOM
-                    },
-                    error: function(xhr, errmsg, err) {
-                        console.log(xhr.status + ": " + xhr.responseText); // Выводим ошибку в консоль для диагностики
-                        alert('An error occurred while deleting the comment.');
-                    }
-                });
-            }
-        });
-
-        // Удаление ответа на комментарий
-        $(document).on('click', '.delete-reply-btn', function(event) {
-            event.preventDefault();
-            var replyId = $(this).data('id');
-            var url = "{% url 'reply_delete' 0 %}".replace('0', replyId);
-
-            if (confirm('Are you sure you want to delete this reply?')) {
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        'csrfmiddlewaretoken': '{{ csrf_token }}'
-                    },
-                    success: function(response) {
-                        $('#reply-' + replyId).remove(); // Удаляем ответ из DOM
-                    },
-                    error: function(xhr, errmsg, err) {
-                        console.log(xhr.status + ": " + xhr.responseText); // Выводим ошибку в консоль для диагностики
-                        alert('An error occurred while deleting the reply.');
-                    }
-                });
-            }
-        });
-
+    // Показать контейнер комментариев и форму добавления комментариев при нажатии кнопки "View Comments"
+    $('#view-comments-btn').click(function() {
+        $('#comments-container').show();
+        $('.add-comment-form').show();
+        $(this).hide();
     });
+
+    // Переключение формы редактирования комментария при нажатии кнопки "Edit"
+    $(document).on('click', '.edit-comment-btn', function() {
+        var commentId = $(this).data('id');
+        $('#edit-comment-form-' + commentId).toggle();
+    });
+
+    // Переключение формы ответа при нажатии кнопки "Reply"
+    $(document).on('click', '.reply-comment-btn', function() {
+        var commentId = $(this).data('id');
+        $('#reply-comment-form-' + commentId).toggle();
+    });
+
+    // Обработка отправки формы редактирования комментария
+    $(document).on('submit', '.edit-comment-form', function(event) {
+        event.preventDefault();
+        var commentId = $(this).attr('id').split('-')[3];
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                $('#comment-' + commentId + ' .comment-text').text(response.text);
+                $('#edit-comment-form-' + commentId).hide();
+            },
+            error: function() {
+                alert('Произошла ошибка при обновлении комментария.');
+            }
+        });
+    });
+
+    // Обработка отправки формы добавления комментария
+    $('#add-comment-form').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: "{% url 'comment_create' post_id=post.id %}",
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                var newComment = `
+                    <div class="comment" id="comment-${response.id}">
+                        <div class="comment-header">
+                            <span class="comment-user" style="color: yellow;">${response.username}</span>
+                        </div>
+                        <p class="comment-text">${response.text}</p>
+                        <div class="comment-actions mt-2">
+                            <button class="btn btn-sm btn-outline-secondary edit-comment-btn" data-id="${response.id}">Edit</button>
+                            <button class="btn btn-sm btn-outline-danger delete-comment-btn" data-id="${response.id}">Delete</button>
+                            {% if user.is_authenticated %}
+                            <button class="btn btn-sm btn-outline-primary reply-comment-btn" data-id="${response.id}">Reply</button>
+                            {% endif %}
+                        </div>
+                        <form class="edit-comment-form mt-2" id="edit-comment-form-${response.id}" action="/comment/${response.id}/update/" method="post" style="display: none;">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_text_${response.id}">Text:</label>
+                                <input type="text" id="id_text_${response.id}" name="text" class="form-control" value="${response.text}" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Update Comment</button>
+                        </form>
+                        <form class="reply-comment-form mt-2" id="reply-comment-form-${response.id}" action="{% url 'reply_create' %}" method="post" style="display: none;">
+                            {% csrf_token %}
+                            <input type="hidden" name="parent_id" value="${response.id}">
+                            <div class="form-group">
+                                <label for="id_reply_text_${response.id}">Reply:</label>
+                                <textarea id="id_reply_text_${response.id}" name="text" class="form-control" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Add Reply</button>
+                        </form>
+                        <div class="replies-container mt-2" id="replies-container-${response.id}">
+                        </div>
+                    </div>
+                `;
+                $('#comments-container').append(newComment);
+                $('#id_text').val('');
+            },
+            error: function() {
+                alert('Произошла ошибка при добавлении комментария.');
+            }
+        });
+    });
+
+    // Обработка отправки формы добавления ответа
+$(document).on('submit', '.reply-comment-form', function(event) {
+    event.preventDefault();
+    var commentId = $(this).attr('id').split('-')[3];
+    var formData = $(this).serialize();
+
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            if (response.success) {
+                var newReply = `
+                    <div class="reply" id="reply-${response.id}">
+                        <div class="reply-header">
+                            <span class="reply-user" style="color: green;">${response.username}</span>
+                        </div>
+                        <p class="reply-text">${response.text}</p>
+                        <div class="reply-actions mt-2">
+                            <button class="btn btn-sm btn-outline-secondary edit-reply-btn" data-id="${response.id}">Edit</button>
+                            <button class="btn btn-sm btn-outline-danger delete-reply-btn" data-id="${response.id}">Delete</button>
+                        </div>
+                        <form class="edit-reply-form mt-2" id="edit-reply-form-${response.id}" action="/reply/${response.id}/update/" method="post" style="display: none;">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_reply_text_${response.id}">Text:</label>
+                                <input type="text" id="id_reply_text_${response.id}" name="text" class="form-control" value="${response.text}" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Update Reply</button>
+                        </form>
+                    </div>
+                `;
+                $('#replies-container-' + commentId).append(newReply);
+                $('#reply-comment-form-' + commentId).find('textarea').val(''); // Сброс содержимого textarea формы ответа
+                $('#reply-comment-form-' + commentId).hide(); // Скрыть форму ответа после успешного добавления
+            } else {
+                alert('Произошла ошибка при добавлении ответа.');
+            }
+        },
+        error: function() {
+            alert('Произошла ошибка при добавлении ответа.');
+        }
+    });
+});
+
+    // Обработка отправки формы редактирования ответа
+    $(document).on('submit', '.edit-reply-form', function(event) {
+        event.preventDefault();
+        var replyId = $(this).attr('id').split('-')[3];
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                $('#reply-' + replyId + ' .reply-text').text(response.text);
+                $('#edit-reply-form-' + replyId).hide();
+            },
+            error: function() {
+                alert('Произошла ошибка при обновлении ответа.');
+            }
+        });
+    });
+
+    // Переключение формы редактирования ответа при нажатии кнопки "Edit"
+    $(document).on('click', '.edit-reply-btn', function() {
+        var replyId = $(this).data('id');
+        $('#edit-reply-form-' + replyId).toggle();
+    });
+
+    // Удаление комментария
+<!-- Удаление комментария -->
+$(document).on('click', '.delete-comment-btn', function() {
+    var commentId = $(this).data('id'); // Получаем id комментария из data-id атрибута кнопки
+
+    if (confirm('Вы уверены, что хотите удалить этот комментарий?')) {
+        $.ajax({
+            url: "{% url 'comment_delete' pk=0 %}".replace('0', commentId),  // Используем commentId в URL
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                $('#comment-' + commentId).remove();
+            },
+            error: function() {
+                alert('Произошла ошибка при удалении комментария.');
+            }
+        });
+    }
+});
+
+
+    // Удаление ответа
+$(document).on('click', '.delete-reply-btn', function() {
+    var replyId = $(this).data('id'); // Получаем id ответа из data-id атрибута кнопки
+
+    if (confirm('Вы уверены, что хотите удалить этот ответ?')) {
+        $.ajax({
+            url: "{% url 'reply_delete' pk=0 %}".replace('0', replyId),  // Используем replyId в URL
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                $('#reply-' + replyId).remove();
+            },
+            error: function() {
+                alert('Произошла ошибка при удалении ответа.');
+            }
+        });
+    }
+});
+});
 </script>
 {% endblock %}
-
-
-
-
-
 
 

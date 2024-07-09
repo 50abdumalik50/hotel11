@@ -46,18 +46,17 @@
         </div>
     </div>
     <!-- Rooms 1 -->
-    <div class="rooms1 section-padding">
+       <div class="rooms1 section-padding">
         <div class="container">
             <div class="row">
                 {% for room in rooms %}
                 <div class="col-lg-4 col-md-6">
                     <div class="square-flip">
                         <div class="square bg-img" data-background="{{ room.image_for_room.url }}">
-{#                            <span class="category"><a href="{{ room.bookings.first }}"></a></span>#}
                             <div class="square-container d-flex align-items-end justify-content-end">
                                 <div class="box-title">
                                     <h6>{{ room.price }}$</h6>
-                                    <h4>{{ room.room_type.choices }}</h4>
+                                    <h4>{{ room.room_type }}</h4>
                                 </div>
                             </div>
                             <div class="flip-overlay"></div>
@@ -82,11 +81,25 @@
                                     </div>
                                 </div>
                                 <div class="butn-dark"> <a href="{% url 'room_details_AS' room.pk %}"><span>Details</span></a> </div>
+                                {% if user.is_staff %}
+                                <div class="admin-buttons">
+                                    <a href="{% url 'room_update' room.pk %}" class="btn btn-warning">Update</a>
+                                    <a href="{% url 'room_delete' room.pk %}" class="btn btn-danger">Delete</a>
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
+            </div>
+            {% if user.is_staff %}
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <a href="{% url 'room_create' %}" class="btn btn-primary">Create New Room</a>
+                </div>
+            </div>
+            {% endif %}
             </div>
         </div>
     </div>

@@ -39,25 +39,44 @@
     </div>
     <!-- News  -->
     <section class="news section-padding">
-        <div class="container">
-            <div class="row">
-                {% for post in news %}
-                <div class="col-lg-4 col-md-6 mb-30">
-                    <div class="item">
-                        <div class="position-re o-hidden"> <img src="{{ post.PostImage.first.image.url }}" alt="">
-                            <div class="date">
-                                <a href="{% url 'post_detail' post.pk %}"> <span>Dec</span> <i>02</i> </a>
-                            </div>
-                        </div>
-                        <div class="con"> <span class="category">
-                                <a href="news.html">Restaurant</a>
-                            </span>
-                            <h5><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h5>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+<div class="container">
+  <div class="row">
+    {% for post in news %}
+      <div class="col-lg-4 col-md-6 mb-30">
+        <div class="item">
+          <!-- Картинка поста -->
+          <div class="position-re o-hidden">
+            <img src="{{ post.PostImage.first.image.url }}" alt="">
+{#            <div class="date">#}
+{#              <a href="{% url 'post_detail' post.pk %}"> <span>Dec</span> <i>02</i> </a>#}
+{#            </div>#}
+          </div>
+          <div class="con">
+            <!-- Категория поста -->
+            <span class="category">
+              <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+            </span>
+            <!-- Заголовок поста -->
+            <h5><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h5>
+
+            <!-- Кнопки для обновления и удаления (только для администратора) -->
+            {% if user.is_authenticated and user.is_staff %}
+              <div class="mt-3">
+                <a href="{% url 'post_update' post.pk %}" class="btn btn-sm btn-primary mr-2">Update</a>
+                <a href="{% url 'post_delete' post.pk %}" class="btn btn-sm btn-danger">Delete</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    <!-- Кнопка создания поста -->
+    {% if user.is_authenticated and user.is_staff %}
+      <a href="{% url 'post_create' %}" class="btn btn-primary">Create Post</a>
+    {% endif %}
+  </div>
+</div>
             <div class="row">
                 <div class="col-md-12 text-center">
                     <!-- Pagination -->

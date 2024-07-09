@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mb-4 text-center">Update Room</h1>
+            <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                {% csrf_token %}
+                <style>
+                    input[type="text"],
+                    input[type="number"],
+                    input[type="date"],
+                    select {
+                        background-color: #f8f9fa; /* Цвет фона */
+                        color: #333; /* Цвет текста */
+                        border: 1px solid #ced4da; /* Цвет границы */
+                        padding: 10px; /* Отступ внутри полей */
+                        border-radius: 4px; /* Скругление углов */
+                        width: 100%; /* Ширина */
+                        margin-bottom: 15px; /* Отступ снизу */
+                    }
+
+                    select {
+                        -webkit-appearance: none; /* Убираем стандартный вид */
+                        -moz-appearance: none;
+                        appearance: none;
+                        background-color: #f8f9fa; /* Цвет фона */
+                        color: #333; /* Цвет текста */
+                        border: 1px solid #ced4da; /* Цвет границы */
+                        padding: 10px; /* Отступ внутри */
+                        border-radius: 4px; /* Скругление углов */
+                        width: 100%; /* Ширина */
+                        margin-bottom: 15px; /* Отступ снизу */
+                    }
+
+                    select option {
+                        background-color: #f8f9fa; /* Цвет фона опций */
+                        color: #333; /* Цвет текста опций */
+                    }
+
+                    button[type="submit"],
+                    a.btn {
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        border-radius: 4px;
+                        text-align: center;
+                        margin: 5px;
+                    }
+
+                    button[type="submit"] {
+                        background-color: #007bff; /* Цвет фона кнопки "Save" */
+                        color: #fff; /* Цвет текста кнопки "Save" */
+                        border: none; /* Без границы */
+                    }
+
+                    a.btn {
+                        background-color: #6c757d; /* Цвет фона кнопки "Back to Room List" */
+                        color: #fff; /* Цвет текста кнопки "Back to Room List" */
+                        border: none; /* Без границы */
+                    }
+                </style>
+                {{ form.as_p }}
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="{% url 'rooms_list' %}" class="btn btn-secondary">Back to Room List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

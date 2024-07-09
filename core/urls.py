@@ -8,9 +8,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
 api_urlpatterns = [
-    path('rooms/', include('apps.rooms.api.urls')),
-    path('restaurants/', include('apps.restaurants.api.urls')),
-    path('docs/', docs.with_ui('swagger', cache_timeout=0), name="docs"),
+    path('api/rooms/', include('apps.rooms.api.urls')),
+    path('api/news/', include('apps.news.api.urls')),
+    path('api/restaurants/', include('apps.restaurants.api.urls')),
+    path('api/docs/', docs.with_ui('swagger', cache_timeout=0), name="docs"),
     # path('api-userssss/', include('rest_framework.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('token_create/', TokenObtainPairView.as_view()),

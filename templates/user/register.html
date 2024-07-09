@@ -1,50 +1,81 @@
 <!DOCTYPE html>
-
-{% extends 'base/base.html' %}
-
-{% block content %}
-
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
-		<title>Registration Form</title>
-		<link rel="stylesheet" href="../../static/css/register.css">
-	</head>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <!-- Replace with your actual path to register.css -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .main {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        .main h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .main form {
+            display: flex;
+            flex-direction: column;
+        }
+        .main form label {
+            margin-bottom: 5px;
+        }
+        .main form input[type="text"],
+        .main form input[type="email"],
+        .main form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+        }
+        .main form button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .main form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h2>Registration</h2>
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
 
-	<body>
-    {% include 'base/header.html' %}
-		<div class="main" style="align-content: center">
-{#            {% if messages %}#}
-{#                <ul>#}
-{#                    {% for message in messages %}#}
-{#                        <li>{{ message }}</li>#}
-{#                    {% endfor %}#}
-{#                </ul>#}
-{#            {% endif %}#}
-			<h2>Registration</h2>
-			<form method="post">
-                {% csrf_token %}
-                <label for="first"
-                    >Username:</label
-                >
-                {{ form.username }}
-                <label for="email">Email:</label>
-                {{ form.email }}
-                <label for="password1">Password:</label>
-                {{ form.password1 }}
-                <label for="password2">Confirm Password:</label>
-                {{ form.password2 }}
-				<button type="submit">
-					Register
-				</button>
-			</form>
-		</div>
-    {% include 'base/footer.html' %}
-	</body>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password1">Password:</label>
+            <input type="password" id="password1" name="password1" required>
+
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" required>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
 </html>
 
-{% endblock %}
+{#{% endblock %}#}

@@ -9,13 +9,15 @@ from django.views.decorators.http import require_POST
 from django.forms import inlineformset_factory
 from django.views.generic import CreateView, UpdateView, DeleteView
 
-from .models import Post, PostImage, Comment
-from .forms import PostForm, PostImagesForm, CommentForm
+from apps.news.models import Post, PostImage, Comment
+from apps.news.forms import PostForm, PostImagesForm, CommentForm
 
 class PostListView(generic.ListView):
     model = Post
     template_name = 'waste/news.html'
     context_object_name = "news"
+
+
 
 class PostDetailView(View):
     def get(self, request, pk):
@@ -41,9 +43,9 @@ class PostDetailView(View):
 class PostCreateView(generic.CreateView):
     model = Post
     form_class = PostForm
-    template_name = 'news_create.html'
-    success_url = '/'
-    extra = 3
+    template_name = 'news/news_create.html'
+    success_url = reverse_lazy('post_list')
+    extra = 1
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -68,8 +70,9 @@ class PostCreateView(generic.CreateView):
 class PostUpdateView(generic.UpdateView):
     model = Post
     form_class = PostForm
-    template_name = 'news_update.html'
-    success_url = reverse_lazy('/')
+    template_name = 'news/news_update.html'
+    success_url = reverse_lazy('post_list')
+    extra = 1
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
@@ -78,7 +81,9 @@ class PostUpdateView(generic.UpdateView):
                 self.request.POST, self.request.FILES, instance=self.object
             )
         else:
-            data['formset'] = inlineformset_factory(Post, PostImage, form=PostImagesForm, extra=self.extra)()
+            data['formset'] = inlineformset_factory(Post, PostImage, form=PostImagesForm, extra=self.extra)(
+                instance=self.object
+            )
         return data
 
     def form_valid(self, form):
@@ -93,7 +98,8 @@ class PostUpdateView(generic.UpdateView):
 
 class PostDeleteView(generic.DeleteView):
     model = Post
-    success_url = reverse_lazy('/')
+    template_name = 'news/news_delete.html'
+    success_url = reverse_lazy('post_list')
 
 class CommentListView(generic.ListView):
     model = Comment
@@ -180,32 +186,35 @@ class ReplyCreateView(LoginRequiredMixin, CreateView):
     form_class = CommentForm
 
     def form_valid(self, form):
-        parent_comment = get_object_or_404(Comment, id=self.kwargs['parent_id'])
-        form.instance.post = parent_comment.post  # Link reply to the parent post
+        parent_comment_id = self.request.POST.get('parent_id')
+        parent_comment = get_object_or_404(Comment, id=parent_comment_id)
+        form.instance.post = parent_comment.post
         form.instance.user = self.request.user
-        form.instance.replay_comment = parent_comment  # Set the parent comment for reply
+        form.instance.reply_comment = parent_comment  # Исправлено на reply_comment
 
         self.object = form.save()
 
-        if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            response_data = {
-                'success': True,
-                'id': self.object.id,
-                'username': self.object.user.username,
-                'text': self.object.text,
-                'created_at': self.object.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                'replay_comment': self.object.replay_comment.id if self.object.replay_comment else None,
-            }
-            return JsonResponse(response_data)
-        return super().form_valid(form)
+        # Возвращаем JSON-ответ с данными созданного ответа
+        data = {
+            'success': True,
+            'id': self.object.id,
+            'username': self.object.user.username,
+            'text': self.object.text,
+        }
+        return JsonResponse(data)
 
-    def get_success_url(self):
-        return reverse_lazy('post_detail', kwargs={'pk': self.object.post.id})
+    def form_invalid(self, form):
+        # Возвращаем JSON-ответ с ошибками валидации формы
+        data = {
+            'success': False,
+            'errors': form.errors,
+        }
+        return JsonResponse(data, status=400)
 
 
 class ReplyUpdateView(LoginRequiredMixin, UpdateView):
-    model = Comment
-    form_class = CommentForm
+    model = Comment  # Assuming Comment model is used for replies
+    form_class = CommentForm  # Use your actual form class here
 
     def get_object(self, queryset=None):
         return get_object_or_404(Comment, id=self.kwargs['reply_id'])
@@ -224,7 +233,6 @@ class ReplyUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'pk': self.object.post.id})
-
 
 class ReplyDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
