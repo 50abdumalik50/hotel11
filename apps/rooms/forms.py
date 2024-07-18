@@ -14,8 +14,7 @@ class RoomForm(forms.ModelForm):
             'number_of_beds',
             'image_for_room',
             'price',
-            'startDate',
-            'endDate',
+
         ]
 
 
@@ -31,13 +30,22 @@ class BookingForm(forms.ModelForm):
         ]
 
 
-# class ImagesForm(forms.ModelForm):
+class RoomSearchForm(forms.Form):
+    search_number = forms.IntegerField(label='Номер комнаты', required=False)
+    search_type = forms.ChoiceField(choices=Room.room_choice, label='Тип комнаты', required=False)
+    STATUS_CHOICES = [
+        ('', 'Any status'),
+        ('booked', 'Booked'),
+        ('available', 'Available')
+    ]
+    status_choice = forms.ChoiceField(choices=STATUS_CHOICES, label='Статус', required=False)
+
+
+# class NotificationForm(forms.ModelForm):
 #     class Meta:
-#         model = RoomImage
-#         fields = ('image',)
-#         widgets = {'image': forms.ClearableFileInput(attrs={
-#                                             'class': 'form-control'
-#         })}
-#
-#
-# RoomImagesFormSet = inlineformset_factory(Room, Images, form=ImagesForm, extra=1, max_num=5)
+#         model = Notification
+#         fields = ['user', 'message']
+#         widgets = {
+#             'user': forms.HiddenInput(),
+#             'message': forms.Textarea(attrs={'rows': 3}),
+#         }

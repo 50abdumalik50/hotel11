@@ -4,11 +4,9 @@ from django.db import models
 
 class CustomUser(AbstractUser):
 
-
-    # Override groups and user_permissions to avoid clashes
     groups = models.ManyToManyField(
         Group,
-        related_name='group',  # Change related_name to avoid clash
+        related_name='group',
         blank=True,
         help_text=('The groups this user belongs to. A user will get all permissions '
                    'granted to each of their groups.'),
@@ -16,8 +14,13 @@ class CustomUser(AbstractUser):
     )
     user_permissions = models.ManyToManyField(
         Permission,
-        related_name='user_permissions',  # Change related_name to avoid clash
+        related_name='user_permissions',
         blank=True,
         help_text='Specific permissions for this user.',
         verbose_name='user permissions',
     )
+
+    phone_number = models.CharField(max_length=9, blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    country_code = models.CharField(max_length=5, blank=True, null=True)
+

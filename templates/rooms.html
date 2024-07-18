@@ -28,81 +28,88 @@
     <!-- Navbar -->
     {% include 'base/header.html' %}
     <!-- Header Banner -->
-    <div class="banner-header section-padding valign bg-img bg-fixed bg-position-bottom" data-overlay-dark="6" data-background="../static/img/slider/1.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center caption mt-90">
-                    <span>
-                        <i class="star-rating"></i>
-                        <i class="star-rating"></i>
-                        <i class="star-rating"></i>
-                        <i class="star-rating"></i>
-                        <i class="star-rating"></i>
-                    </span>
-                    <h5>The Cappa Boutique Hotel</h5>
-                    <h1>Rooms & Suites</h1>
-                </div>
+<div class="banner-header section-padding valign bg-img bg-fixed bg-position-bottom" data-overlay-dark="6" data-background="../static/img/slider/1.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center caption mt-90">
+                <span>
+                    <i class="star-rating"></i>
+                    <i class="star-rating"></i>
+                    <i class="star-rating"></i>
+                    <i class="star-rating"></i>
+                    <i class="star-rating"></i>
+                </span>
+                <h5>The Cappa Boutique Hotel</h5>
+                <h1>Rooms & Suites</h1>
             </div>
         </div>
     </div>
-    <!-- Rooms 1 -->
-       <div class="rooms1 section-padding">
-        <div class="container">
-            <div class="row">
-                {% for room in rooms %}
-                <div class="col-lg-4 col-md-6">
-                    <div class="square-flip">
-                        <div class="square bg-img" data-background="{{ room.image_for_room.url }}">
-                            <div class="square-container d-flex align-items-end justify-content-end">
-                                <div class="box-title">
-                                    <h6>{{ room.price }}$</h6>
-                                    <h4>{{ room.room_type }}</h4>
-                                </div>
-                            </div>
-                            <div class="flip-overlay"></div>
-                        </div>
-                        <div class="square2">
-                            <div class="square-container2">
+</div>
+<!-- Rooms 1 -->
+
+<div class="rooms1 section-padding">
+    <div class="container">
+        <div class="row">
+            {% for room in rooms %}
+            <div class="col-lg-4 col-md-6">
+                <div class="square-flip">
+                    <div class="square bg-img" data-background="{% if room.image_for_room %}{{ room.image_for_room.url }}{% else %}path/to/default/image.jpg{% endif %}">
+                        <div class="square-container d-flex align-items-end justify-content-end">
+                            <div class="box-title">
                                 <h6>{{ room.price }}$</h6>
                                 <h4>{{ room.room_type }}</h4>
-                                <p>Luxury room comfortable .</p>
-                                <div class="row room-facilities mb-15">
-                                    <div class="col-md-6">
-                                        <ul>
-                                            <li><i class="flaticon-group"></i>{{ room.number_of_beds }}</li>
-                                            <li><i class="flaticon-wifi"></i> Free Wifi</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <ul>
-                                            <li><i class="flaticon-bed"></i>{{ room.number }}</li>
-                                            <li><i class="flaticon-breakfast"></i>{{ room.bookings.first }}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="butn-dark"> <a href="{% url 'room_details_AS' room.pk %}"><span>Details</span></a> </div>
-                                {% if user.is_staff %}
-                                <div class="admin-buttons">
-                                    <a href="{% url 'room_update' room.pk %}" class="btn btn-warning">Update</a>
-                                    <a href="{% url 'room_delete' room.pk %}" class="btn btn-danger">Delete</a>
-                                </div>
-                                {% endif %}
                             </div>
+                        </div>
+                        <div class="flip-overlay"></div>
+                    </div>
+
+                    <div class="square2">
+                        <div class="square-container2">
+                            <h6>{{ room.price }}$</h6>
+                            <h4>{{ room.room_type }}</h4>
+                            <p>Luxury room comfortable.</p>
+                            <div class="row room-facilities mb-15">
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li><i class="flaticon-group"></i>{{ room.number_of_beds }}</li>
+                                        <li><i class="flaticon-wifi"></i> Free Wifi</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul>
+                                        <li><i class="flaticon-bed"></i>{{ room.number }}</li>
+                                        <!-- Check if room is booked -->
+                                        {% if room.bookings.exists %}
+                                            <li><i class="flaticon-breakfast"></i> Booked</li>
+                                        {% else %}
+                                            <li><i class="flaticon-breakfast"></i> Available</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="butn-dark"> <a href="{% url 'room_details_AS' room.pk %}"><span>Details</span></a> </div>
+                            {% if user.is_staff %}
+                            <div class="admin-buttons">
+                                <a href="{% url 'room_update' room.pk %}" class="btn btn-warning">Update</a>
+                                <a href="{% url 'room_delete' room.pk %}" class="btn btn-danger">Delete</a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-            {% if user.is_staff %}
-            <div class="row mt-4">
-                <div class="col-12 text-center">
-                    <a href="{% url 'room_create' %}" class="btn btn-primary">Create New Room</a>
-                </div>
-            </div>
-            {% endif %}
+            {% endfor %}
+        </div>
+        {% if user.is_staff %}
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <a href="{% url 'room_create' %}" class="btn btn-primary">Create New Room</a>
             </div>
         </div>
+        {% endif %}
     </div>
+</div>
+
     <!-- Reservation & Booking Form -->
 {#    <section class="reservation">#}
 {#        <div class="background bg-img bg-fixed valign section-padding" data-background="img/slider/1.jpg" data-overlay-dark="5">#}

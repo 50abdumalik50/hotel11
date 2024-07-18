@@ -13,6 +13,7 @@ import os
 
 from datetime import timedelta
 
+from django.core.mail import send_mail
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -216,3 +217,18 @@ SIMPLE_JWT = {
 }
 
 
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'abdumalikabdukarimov50@gmail.com'
+EMAIL_HOST_PASSWORD = 'ktkh msdo znce zkww'
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.mailtrap.io'  # Из Mailtrap
+# EMAIL_PORT = 465  # Или порт, указанный в Mailtrap
+# EMAIL_HOST_USER = 'abd398fdb79500'  # Логин из Mailtrap
+# EMAIL_HOST_PASSWORD = '19e1f89fcea1aa'  # Пароль из Mailtrap

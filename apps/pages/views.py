@@ -1,16 +1,20 @@
 from datetime import datetime
-
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.dateparse import parse_date
 from django.views import generic
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 
 
 from apps.pages.forms import ServiceForm, TeamForm, AboutForm, ContactForm
+
 from apps.pages.models import Service, Team, Facilities, About, Contact
+
 from apps.rooms.models import Room, Booking
+from core import settings
 
 
 class ServiceListView(generic.ListView):
@@ -55,7 +59,6 @@ class TeamDeleteView(generic.DeleteView):
     success_url = reverse_lazy('team')
 
 
-
 class FacilitiesListView(generic.ListView):
     model = Facilities
     template_name = 'facilities.html'
@@ -64,7 +67,6 @@ class FacilitiesListView(generic.ListView):
 class AboutListView(generic.ListView):
     model = About
     template_name = 'about.html'
-
 
 
 class ContactListView(generic.ListView):
@@ -82,52 +84,176 @@ class ContactListView(generic.ListView):
 
 
 # def create_booking(request):
-#     from_date = datetime.strptime(request.POST.get('from'), '%m/%d/%Y').strftime('%Y-%m-%d')
-#     to_date = datetime.strptime(request.POST.get('to'), '%m/%d/%Y').strftime('%Y-%m-%d')
-#     room = Room.objects.get(id=request.POST.get('number'))
-#     # beds = request.POST.get('beds')
+#     from_date_str = request.POST.get('from')
+#     to_date_str = request.POST.get('to')
 #
-#     Booking.objects.create(
-#         room=room,
-#         check_in_date=from_date,
-#         check_out_date=to_date,
-#         user=request.user,
-#     )
+#     if from_date_str and to_date_str:
+#         try:
+#             from_date = datetime.strptime(from_date_str, '%m/%d/%Y').strftime('%Y-%m-%d')
+#             to_date = datetime.strptime(to_date_str, '%m/%d/%Y').strftime('%Y-%m-%d')
+#         except ValueError:
+#             return redirect('/error/')
 #
-#     return redirect('/')
-
+#         room_id = request.POST.get('number')
+#         try:
+#             room = Room.objects.get(id=room_id)
+#         except Room.DoesNotExist:
+#             return redirect('/error/')
+#
+#         Booking.objects.create(
+#             room=room,
+#             check_in_date=from_date,
+#             check_out_date=to_date,
+#             user=request.user,
+#         )
+#
+#         return redirect('/')
+#     else:
+#         return redirect('/error/')
 
 
 def create_booking(request):
-    from_date_str = request.POST.get('from')
-    to_date_str = request.POST.get('to')
+    if request.method == 'POST':
+        from_date_str = request.POST.get('from')
+        to_date_str = request.POST.get('to')
 
-    if from_date_str and to_date_str:
-        try:
-            from_date = datetime.strptime(from_date_str, '%m/%d/%Y').strftime('%Y-%m-%d')
-            to_date = datetime.strptime(to_date_str, '%m/%d/%Y').strftime('%Y-%m-%d')
-        except ValueError:
-            # Handle the case where date format doesn't match
-            # You may want to redirect to an error page or display an error message
-            return redirect('/error/')  # Replace '/error/' with your error handling URL
+        if from_date_str and to_date_str:
+            try:
+                from_date = datetime.strptime(from_date_str, '%m/%d/%Y').date()
+                to_date = datetime.strptime(to_date_str, '%m/%d/%Y').date()
+            except ValueError:
+                return redirect('/error/?message=Invalid date format.')
 
-        room_id = request.POST.get('number')
-        try:
-            room = Room.objects.get(id=room_id)
-        except Room.DoesNotExist:
-            # Handle the case where room with given ID doesn't exist
-            return redirect('/error/')
+            room_id = request.POST.get('number')
+            try:
+                room = Room.objects.get(id=room_id)
+            except Room.DoesNotExist:
+                return redirect('/error/?message=Room does not exist.')
 
-        Booking.objects.create(
-            room=room,
-            check_in_date=from_date,
-            check_out_date=to_date,
-            user=request.user,
-        )
+            stay_duration = (to_date - from_date).days
+            if stay_duration < Booking.MIN_STAY_DURATION:
+                return redirect(f'/error/?message=The minimum stay duration is {Booking.MIN_STAY_DURATION} days.')
 
-        return redirect('/')
-    else:
-        # Handle the case where from_date_str or to_date_str is empty
-        return redirect('/error/')  # Replace '/error/' with your error handling URL
+            booking = Booking(
+                room=room,
+                check_in_date=from_date,
+                check_out_date=to_date,
+                user=request.user,
+            )
+
+            if booking.is_available():
+                try:
+                    booking.full_clean()
+                    booking.save()
+
+                    # Отправка письма после успешного создания бронирования
+                    subject = 'Подтверждение бронирования'
+                    message = f'Ваше бронирование для комнаты {booking.room.number} с {booking.check_in_date} по {booking.check_out_date} успешно подтверждено!'
+                    from_email = 'abdumalikabdukarimov50@gmail.com'
+                    recipient_list = [request.user.email]
+
+                    send_mail(subject, message, from_email, recipient_list)
+
+                    return redirect('/')
+                except ValidationError as e:
+                    errors = e.message_dict.get('__all__', [])
+                    return render(request, 'booking_form.html', {'errors': errors, 'rooms': Room.objects.all()})
+            else:
+                return redirect('/error/?message=The room is not available for the selected dates.')
+        else:
+            return redirect('/error/?message=Please fill in all required fields.')
+
+    return redirect('/error/?message=Invalid request method.')
 
 
+# def create_booking(request):
+#     if request.method == 'POST':
+#         from_date_str = request.POST.get('from')
+#         to_date_str = request.POST.get('to')
+#
+#         if from_date_str and to_date_str:
+#             try:
+#                 from_date = datetime.strptime(from_date_str, '%m/%d/%Y').date()
+#                 to_date = datetime.strptime(to_date_str, '%m/%d/%Y').date()
+#             except ValueError:
+#                 return redirect('/error/?message=Invalid date format.')
+#
+#             room_id = request.POST.get('number')
+#             try:
+#                 room = Room.objects.get(id=room_id)
+#             except Room.DoesNotExist:
+#                 return redirect('/error/?message=Room does not exist.')
+#
+#             booking = Booking(
+#                 room=room,
+#                 check_in_date=from_date,
+#                 check_out_date=to_date,
+#                 user=request.user,
+#             )
+#
+#             try:
+#                 booking.full_clean()
+#                 booking.save()
+#                 messages.success(request, 'Booking created successfully.')
+#                 return redirect('/')
+#             except ValidationError as e:
+#                 errors = e.message_dict['__all__']
+#                 return render(request, 'booking_form.html',
+#                               {'errors': errors, 'number': Room.objects.all(), 'bed': Room.objects.all()})
+#         else:
+#             return redirect('/error/?message=Please fill in all required fields.')
+#
+#     return redirect('/error/?message=Invalid request method.')
+
+
+
+
+
+
+# def create_booking(request):
+#     if request.method == 'POST':
+#         from_date_str = request.POST.get('from')
+#         to_date_str = request.POST.get('to')
+#
+#         if from_date_str and to_date_str:
+#             try:
+#                 from_date = datetime.strptime(from_date_str, '%m/%d/%Y').date()
+#                 to_date = datetime.strptime(to_date_str, '%m/%d/%Y').date()
+#             except ValueError:
+#                 return redirect('/error/?message=Invalid date format.')
+#
+#             room_id = request.POST.get('number')
+#             try:
+#                 room = Room.objects.get(id=room_id)
+#             except Room.DoesNotExist:
+#                 return redirect('/error/?message=Room does not exist.')
+#
+#             booking = Booking(
+#                 room=room,
+#                 check_in_date=from_date,
+#                 check_out_date=to_date,
+#                 user=request.user,
+#             )
+#
+#             try:
+#                 booking.full_clean()
+#                 booking.save()
+#                 send_notification(request.user, f'Your booking for room {room.number} has been successfully created.')
+#                 return redirect('/')
+#             except ValidationError as e:
+#                 errors = e.message_dict['__all__']
+#                 return render(request, 'booking_form.html', {'errors': errors, 'number': Room.objects.all(), 'bed': Room.objects.all()})
+#         else:
+#             return redirect('/error/?message=Please fill in all required fields.')
+#
+#     return redirect('/error/?message=Invalid request method.')
+#
+# def send_notification(user, message):
+#     Notification.objects.create(user=user, message=message)
+#     send_mail(
+#         'Notification from Hotel Booking',
+#         message,
+#         settings.DEFAULT_FROM_EMAIL,
+#         [user.email],
+#         fail_silently=False,
+#     )

@@ -7,13 +7,12 @@ class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = [
+
             'room_type',
             'number',
             'number_of_beds',
             'image_for_room',
             'price',
-            'startDate',
-            'endDate',
         ]
 
 
@@ -35,6 +34,7 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = [
+            'id',
             'user',
             'room',
             'check_in_date',

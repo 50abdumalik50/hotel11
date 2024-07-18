@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from django.contrib.auth import get_user_model
@@ -14,14 +15,17 @@ class Post(models.Model):
     description = models.TextField(
         verbose_name='Описание'
     )
-    # image_for_news = models.ImageField(
-    #     upload_to="media/",
-    #     blank=True,
-    #     null=True,
-    # )
     created_at = models.DateTimeField(
         auto_now_add=True
     )
+
+    def clean(self):
+        if Post.objects.filter(title=self.title).exclude(pk=self.pk).exists():
+            raise ValidationError(f'Post with title "{self.title}" already exists.')
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.title}'
@@ -47,11 +51,6 @@ class PostImage(models.Model):
 
 class Comment(models.Model):
     related_name="comments"
-    # room = models.ForeignKey(
-    #     Room,
-    #     on_delete=models.CASCADE,
-    #     related_name="comments",
-    # )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

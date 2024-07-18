@@ -1,12 +1,88 @@
 {% extends 'base/base.html' %}
 
-
 {% block content %}
-  <h2>Delete Post</h2>
-  <form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <button type="submit">Confirm</button>
-  </form>
-  <a href="{% url 'index' %}">Cancel</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Post</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #59332e;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 5rem;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #ffffff;
+    }
+
+    button[type="submit"],
+    a.btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"] {
+      background-color: #dc3545;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover,
+    a.btn:hover {
+      background-color: #c82333;
+    }
+
+    a.btn {
+      background-color: #6c757d;
+      color: #ffffff;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Delete Post</h2>
+    <form method="post" class="form-horizontal">
+      {% csrf_token %}
+      <p>Are you sure you want to delete "{{ object }}"?</p>
+      <div class="form-group text-center">
+        <button type="submit" class="btn btn-danger">Confirm</button>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
 {% endblock %}
+

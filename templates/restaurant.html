@@ -98,12 +98,15 @@
                                 <div class="col-md-5 {% if forloop.counter0|divisibleby:2 %}offset-md-2{% endif %}">
                                     <div class="menu-info">
                                         <h5>{{ item.name }} <span class="price">{{ item.price }}$</span></h5>
+                                        {% if item.photo %}
+                                        <img src="{{ item.photo.url }}" alt="{{ item.name }}" class="img-fluid">
+                                        {% endif %}
                                         <p>{{ item.description }}</p>
                                         {% if user.is_staff %}
-                                        <a href="{% url 'restaurant_update' item.pk %}" class="btn btn-primary">Изменить</a>
+                                        <a href="{% url 'restaurant_update' item.pk %}" class="btn btn-primary">Update</a>
                                         <form method="post" action="{% url 'restaurant_delete' item.pk %}" style="display:inline;">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger">Удалить</button>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                         {% endif %}
                                     </div>
@@ -119,12 +122,13 @@
         {% if user.is_staff %}
         <div class="row">
             <div class="col-md-12 text-center">
-                <a href="{% url 'restaurant_create' %}" class="btn btn-success">Добавить новый элемент меню</a>
+                <a href="{% url 'restaurant_create' %}" class="btn btn-success">Create New Menu</a>
             </div>
         </div>
         {% endif %}
     </div>
 </section>
+
     <!-- Testiominals -->
 {#    <section class="background bg-img bg-fixed section-padding pb-0" data-background="img/slider/1.jpg" data-overlay-dark="5">#}
 {#        <div class="container">#}

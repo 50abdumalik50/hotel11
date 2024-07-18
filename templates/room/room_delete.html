@@ -1,45 +1,90 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Room</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #59332e;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-{% extends 'base/base.html' %}
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 5rem;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
 
-{% load static %}
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #ffffff;
+    }
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="mb-4 text-center">Delete Room</h1>
-            <p>Are you sure you want to delete the room "{{ room }}"?</p>
-            <form method="post" class="form-horizontal">
-                {% csrf_token %}
-                <style>
-                    button[type="submit"],
-                    a.btn {
-                        padding: 10px 20px;
-                        font-size: 16px;
-                        border-radius: 4px;
-                        text-align: center;
-                        margin: 5px;
-                    }
+    p {
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+    }
 
-                    button[type="submit"] {
-                        background-color: #dc3545; /* Цвет фона кнопки "Delete" */
-                        color: #fff; /* Цвет текста кнопки "Delete" */
-                        border: none; /* Без границы */
-                    }
+    button[type="submit"],
+    a.btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
 
-                    a.btn {
-                        background-color: #6c757d; /* Цвет фона кнопки "Back to Room List" */
-                        color: #fff; /* Цвет текста кнопки "Back to Room List" */
-                        border: none; /* Без границы */
-                    }
-                </style>
-                <div class="form-group text-center">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <a href="{% url 'rooms_list' %}" class="btn btn-secondary">Back to Room List</a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-{% endblock %}
+    button[type="submit"] {
+      background-color: #dc3545;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #c82333;
+    }
+
+    a.btn {
+      background-color: #6c757d;
+      color: #ffffff;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    a.btn:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Delete Room</h1>
+    <p>Are you sure you want to delete the room "{{ room }}"?</p>
+    <form method="post" class="form-horizontal">
+      {% csrf_token %}
+      <div class="form-group text-center">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'rooms_list' %}" class="btn btn-secondary">Back to Room List</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 from django.urls import path
 
-from apps.pages.views import ServiceListView, TeamListView, FacilitiesListView, ContactListView, AboutListView, create_booking, TeamCreateView, TeamUpdateView, TeamDetailView, TeamDeleteView
+from apps.pages.views import ServiceListView, TeamListView, FacilitiesListView, ContactListView, AboutListView, \
+    create_booking, TeamCreateView, TeamUpdateView, TeamDetailView, TeamDeleteView
 
 urlpatterns = [
     path('service/list', ServiceListView.as_view(), name="service"),
@@ -8,6 +9,9 @@ urlpatterns = [
     path('contact/', ContactListView.as_view(), name="contact"),
     path('about/', AboutListView.as_view(), name="about"),
     path('create_booking/', create_booking, name='create_booking'),
+
+
+
 
 
     path('team/', TeamListView.as_view(), name="team"),

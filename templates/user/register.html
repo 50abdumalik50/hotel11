@@ -6,70 +6,214 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
     <link rel="stylesheet" href="{% static 'css/register.css' %}">
-    <!-- Replace with your actual path to register.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Roboto:wght@400;500&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom right, #1e3c72, #2a5298), url('https://example.com/luxury-hotel-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
         }
         .main {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 5px;
+            width: 100%;
+            max-width: 500px;
+            background: linear-gradient(to bottom right, #ffffff, #f7f9f9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
         }
         .main h2 {
-            text-align: center;
             margin-bottom: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         .main form {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            animation: formFadeIn 1s ease-in-out;
         }
         .main form label {
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            color: #34495e;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            width: 100%;
+        }
+        .main form label i {
+            margin-right: 8px;
+            color: #2980b9;
         }
         .main form input[type="text"],
         .main form input[type="email"],
-        .main form input[type="password"] {
+        .main form input[type="password"],
+        .main form select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
             font-size: 16px;
+            color: #333;
+            background-color: #ecf0f1;
+            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .main form input[type="text"]:focus,
+        .main form input[type="email"]:focus,
+        .main form input[type="password"]:focus,
+        .main form select:focus {
+            border-color: #3498db;
+            background-color: #fff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         .main form button {
-            background-color: #007bff;
-            color: #ffffff;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: #fff;
             border: none;
-            padding: 10px;
-            border-radius: 3px;
+            padding: 12px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         .main form button:hover {
-            background-color: #0056b3;
+            background: linear-gradient(to right, #2980b9, #3498db);
+            transform: scale(1.05);
+        }
+        .errorlist {
+            color: #e74c3c;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-align: left;
+            width: 100%;
+        }
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .file-upload input[type="file"] {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0;
+            right: 0;
+            top: 0;
+            width: 100%;
+        }
+        .file-upload-label {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            border: 1px solid #2980b9;
+            border-radius: 5px;
+            padding: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .file-upload-label:hover {
+            background-color: #2980b9;
+        }
+        .input-hint {
+            font-size: 12px;
+            color: #95a5a6;
+            margin-top: 5px;
+            width: 100%;
+            text-align: left;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes formFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media screen and (max-width: 768px) {
+            .main {
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+            .main h2 {
+                font-size: 28px;
+            }
+            .main form input[type="text"],
+            .main form input[type="email"],
+            .main form input[type="password"],
+            .main form select {
+                padding: 10px;
+                font-size: 14px;
+            }
+            .main form button {
+                padding: 10px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="main">
         <h2>Registration</h2>
-        <form method="post" action="{% url 'register' %}">
+        <form id="registration-form" method="post" enctype="multipart/form-data" action="{% url 'register' %}">
             {% csrf_token %}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+            {{ form.non_field_errors }}
+            <label for="username"><i class="fas fa-user"></i> Username:</label>
+            {{ form.username.errors }}
+            <input type="text" id="username" name="username" value="{{ form.username.value|default_if_none:'' }}" required>
+            <div class="input-hint">Letters, numbers, underscores only.</div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+            {{ form.email.errors }}
+            <input type="email" id="email" name="email" value="{{ form.email.value|default_if_none:'' }}" required>
+            <div class="input-hint">Example: user@example.com</div>
 
-            <label for="password1">Password:</label>
+            <label for="phone_number"><i class="fas fa-phone-alt"></i> Phone Number:</label>
+            {{ form.phone_number.errors }}
+            <div style="display: flex; align-items: center;">
+                <select id="country_code" name="country_code" style="padding: 12px; margin-right: 10px; border-radius: 5px; border: 1px solid #bdc3c7; font-size: 16px;">
+                    <option value="+1">+1 USA</option>
+                    <option value="+7">+7 Russia</option>
+                    <option value="+7">+7 Kazakhstan</option>
+                    <option value="+375">+375 Belarus</option>
+                    <option value="+380">+380 Ukraine</option>
+                    <option value="+993">+993 Turkmenistan</option>
+                    <option value="+994">+994 Azerbaijan</option>
+                    <option value="+995">+995 Georgia</option>
+                    <option value="+996">+996 Kyrgyzstan</option>
+                    <option value="+998">+998 Uzbekistan</option>
+                </select>
+                <input type="text" id="phone_number" name="phone_number" value="{{ form.phone_number.value|default_if_none:'' }}" style="width: calc(100% - 120px); padding: 12px; border-radius: 5px; border: 1px solid #bdc3c7; font-size: 16px;" required>
+            </div>
+            <div class="input-hint">Enter your phone number.</div>
+
+            <label for="password1"><i class="fas fa-lock"></i> Password:</label>
+            {{ form.password1.errors }}
             <input type="password" id="password1" name="password1" required>
 
-            <label for="password2">Confirm Password:</label>
+            <label for="password2"><i class="fas fa-lock"></i> Confirm Password:</label>
+            {{ form.password2.errors }}
             <input type="password" id="password2" name="password2" required>
 
             <button type="submit">Register</button>
@@ -77,5 +221,3 @@
     </div>
 </body>
 </html>
-
-{#{% endblock %}#}

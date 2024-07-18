@@ -40,7 +40,6 @@ class ContactForm(forms.ModelForm):
             'number',
             'email',
             'subject',
-            # 'message',
         ]
 
 

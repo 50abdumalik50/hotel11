@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Детали бронирования</h1>
+        <p><strong>Номер комнаты:</strong> {{ object.room.number }}</p>
+        <p><strong>Дата заезда:</strong> {{ object.check_in_date }}</p>
+        <p><strong>Дата отъезда:</strong> {{ object.check_out_date }}</p>
+        <p><strong>Дата бронирования:</strong> {{ object.date_of_reservation }}</p>
+        <p><strong>Забронировал:</strong> {{ object.user.username }}</p>
+<p><strong>Контактные данные:</strong> ({{ object.user.country_code }}) {{ object.user.phone_number }} </p>
+
+
+        <a href="{% url 'booking_update' pk=object.pk %}" class="btn btn-primary">Изменить бронь</a>
+        <a href="{% url 'booking_delete' pk=object.pk %}" class="btn btn-danger">Удалить бронь</a>
+    </div>
+{% endblock %}

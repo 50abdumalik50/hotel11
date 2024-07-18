@@ -3,7 +3,8 @@ from rest_framework.routers import DefaultRouter
 from apps.rooms.api import views
 
 router = DefaultRouter()
-router.register('', views.RoomViewSet, basename="room_api")
+router.register('rooms', views.RoomViewSet, basename="room_api")
+router.register('bookings', views.BookingViewSet, basename="booking_api")
 
 urlpatterns = [
     path('room/<int:pk>/', views.RoomUpdateDeleteRetrieveAPIView.as_view(), name='room_rest'),

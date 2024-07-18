@@ -87,61 +87,66 @@
 
 
 
-<section class="reservation">
-    <div class="background bg-img bg-fixed valign section-padding" data-background="img/slider/1.jpg" data-overlay-dark="5">
-        <div class="container">
-            <div class="row">
-                <!-- Reservation -->
-                <div class="col-md-5 mb-30 mt-30">
-                    <p><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i></p>
-                    <h5>Each of our guest rooms feature a private bath, wi-fi, cable television and include full breakfast.</h5>
-                    <div class="reservations mb-30">
-                        <div class="icon"><span class="flaticon-call"></span></div>
-                        <div class="text">
-                            <p>Reservation</p> <a href="tel:855-100-4444">996 552 843 600</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Booking Form -->
-                <div class="col-md-6 offset-md-1">
-                    <div class="booking-box">
-                        <div class="head-box">
-                            <h4>Hotel Booking Form</h4>
-                        </div>
-                        <div class="booking-inner clearfix">
-                            {% if user.is_authenticated %}
-                            <form action="{% url 'create_booking' %}" class="form1 clearfix" method="post">
-                            {% csrf_token %}
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-12">
-                                        <div class="input1_wrapper">
-                                            <label>Check in</label>
-                                            <div class="input1_inner">
-                                                <input type="text" class="form-control input datepicker" name="from" placeholder="Check in">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-12">
-                                        <div class="input1_wrapper">
-                                            <label>Check out</label>
-                                            <div class="input1_inner">
-                                                <input type="text" class="form-control input datepicker" name="to" placeholder="Check out">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-12">
-                                        <div class="select1_wrapper">
-                                            <label>Adults</label>
-                                            <div class="select1_inner">
-                                                <select class="select2 select select2-hidden-accessible" name="number" style="width: 100%" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                                                    <option value="0" data-select2-idid="3">Number</option>
-                                                    {% for room in number %}
-                                                        <option value="{{ room.id }}">{{ room.number }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
+
+
+
+
+
+{#<section class="reservation">#}
+{#    <div class="background bg-img bg-fixed valign section-padding" data-background="img/slider/1.jpg" data-overlay-dark="5">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <!-- Reservation -->#}
+{#                <div class="col-md-5 mb-30 mt-30">#}
+{#                    <p><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i></p>#}
+{#                    <h5>Each of our guest rooms feature a private bath, wi-fi, cable television and include full breakfast.</h5>#}
+{#                    <div class="reservations mb-30">#}
+{#                        <div class="icon"><span class="flaticon-call"></span></div>#}
+{#                        <div class="text">#}
+{#                            <p>Reservation</p> <a href="tel:855-100-4444">996 552 843 600</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <!-- Booking Form -->#}
+{#                <div class="col-md-6 offset-md-1">#}
+{#                    <div class="booking-box">#}
+{#                        <div class="head-box">#}
+{#                            <h4>Hotel Booking Form</h4>#}
+{#                        </div>#}
+{#                        <div class="booking-inner clearfix">#}
+{#                            {% if user.is_authenticated %}#}
+{#                            <form action="{% url 'create_booking' %}" class="form1 clearfix" method="post">#}
+{#                            {% csrf_token %}#}
+{#                                <div class="row">#}
+{#                                    <div class="col-lg-6 col-md-12">#}
+{#                                        <div class="input1_wrapper">#}
+{#                                            <label>Check in</label>#}
+{#                                            <div class="input1_inner">#}
+{#                                                <input type="text" class="form-control input datepicker" name="from" placeholder="Check in">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="col-lg-6 col-md-12">#}
+{#                                        <div class="input1_wrapper">#}
+{#                                            <label>Check out</label>#}
+{#                                            <div class="input1_inner">#}
+{#                                                <input type="text" class="form-control input datepicker" name="to" placeholder="Check out">#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="col-lg-6 col-md-12">#}
+{#                                        <div class="select1_wrapper">#}
+{#                                            <label>Adults</label>#}
+{#                                            <div class="select1_inner">#}
+{#                                                <select class="select2 select select2-hidden-accessible" name="number" style="width: 100%" data-select2-id="1" tabindex="-1" aria-hidden="true">#}
+{#                                                    <option value="0" data-select2-idid="3">Number</option>#}
+{#                                                    {% for room in number %}#}
+{#                                                        <option value="{{ room.id }}">{{ room.number }}</option>#}
+{#                                                    {% endfor %}#}
+{#                                                </select>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
 {#                                    <div class="col-lg-6 col-md-12">#}
 {#                                        <div class="select1_wrapper">#}
 {#                                            <label>Children</label>#}
@@ -155,13 +160,113 @@
 {#                                            </div>#}
 {#                                        </div>#}
 {#                                    </div>#}
+{#                                    <div class="col-lg-12 col-md-12">#}
+{#                                        <button type="submit" class="btn-form1-submit mt-15">Check Availability</button>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </form>#}
+{#                            {% else %}#}
+{#                                <p>You need to <a href="{% url 'login' %}">login</a> to make a reservation.</p>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="reservation">
+    <div class="background bg-img bg-fixed valign section-padding" data-background="img/slider/1.jpg" data-overlay-dark="5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 mb-30 mt-30">
+                    <p><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i></p>
+                    <h5>Каждый из наших номеров оснащен отдельной ванной комнатой, Wi-Fi, кабельным телевидением и включает полный завтрак.</h5>
+                    <div class="reservations mb-30">
+                        <div class="icon"><span class="flaticon-call"></span></div>
+                        <div class="text">
+                            <p>Бронирование</p> <a href="tel:855-100-4444">996 552 843 600</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 offset-md-1">
+                    <div class="booking-box">
+                        <div class="head-box">
+                            <h4>Форма бронирования отеля</h4>
+                        </div>
+                        <div class="booking-inner clearfix">
+                            {% if user.is_authenticated %}
+                            <form action="{% url 'create_booking' %}" class="form1 clearfix" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        {% if errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="input1_wrapper">
+                                            <label>Дата заезда</label>
+                                            <div class="input1_inner">
+                                                <input type="text" class="form-control input datepicker" name="from" placeholder="Дата заезда">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="input1_wrapper">
+                                            <label>Дата отъезда</label>
+                                            <div class="input1_inner">
+                                                <input type="text" class="form-control input datepicker" name="to" placeholder="Дата отъезда">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="select1_wrapper">
+                                            <label>Номер комнаты</label>
+                                            <div class="select1_inner">
+                                                <select class="select2 select select2-hidden-accessible" name="number" style="width: 100%" tabindex="-1" aria-hidden="true">
+                                                    <option value="0">Номер</option>
+                                                    {% for room in number %}
+                                                        <option value="{{ room.id }}">{{ room.number }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12 col-md-12">
-                                        <button type="submit" class="btn-form1-submit mt-15">Check Availability</button>
+                                        <button type="submit" class="btn-form1-submit mt-15">Проверить доступность</button>
                                     </div>
                                 </div>
                             </form>
                             {% else %}
-                                <p>You need to <a href="{% url 'login' %}">login</a> to make a reservation.</p>
+                                <p>Вам необходимо <a href="{% url 'login' %}">войти</a>, чтобы сделать бронь.</p>
                             {% endif %}
                         </div>
                     </div>

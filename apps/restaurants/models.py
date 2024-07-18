@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -26,7 +27,6 @@ class Hour(models.Model):
     endDate = models.TimeField(
         null=True,
     )
-    # description = models.TextField(max_length=100)
 
 
 class Restaurant_Menu(models.Model):
@@ -41,14 +41,27 @@ class Restaurant_Menu(models.Model):
         max_length=20,
         choices=menu,
     )
-    # Menu = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
     name = models.TextField()
     description = models.TextField()
     price = models.DecimalField(
         max_digits=1000,
         decimal_places=2,
     )
+    photo = models.ImageField(
+        upload_to='menu_photos/',
+        blank=True,
+        null=True,
+    )
 
-    def __str__(self):
-        return f"{self.name} ({self.menu_type})"
+    def clean(self):
+        if Restaurant_Menu.objects.filter(name=self.name, menu_type=self.menu_type).exists():
+            raise ValidationError(f'Dish with name "{self.name}" already exists in the "{self.menu_type}" category.')
+
+    def clean(self):
+        if Restaurant_Menu.objects.filter(name=self.name, menu_type=self.menu_type).exclude(id=self.id).exists():
+            raise ValidationError(f'Dish with name "{self.name}" already exists in the "{self.menu_type}" category.')
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 

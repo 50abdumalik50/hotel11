@@ -10,6 +10,7 @@ from django.forms import inlineformset_factory
 from django.views.generic import CreateView, UpdateView, DeleteView
 
 from apps.news.models import Post, PostImage, Comment
+
 from apps.news.forms import PostForm, PostImagesForm, CommentForm
 
 class PostListView(generic.ListView):
@@ -171,11 +172,9 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
                 return JsonResponse({'success': True})
             return redirect(success_url)
         else:
-            # Handle unauthorized deletion attempt
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'success': False, 'error': 'Unauthorized'})
-            # You may choose to raise a 403 Forbidden or redirect to an error page
-            return redirect(success_url)  # Redirect to success URL as fallback
+            return redirect(success_url)
 
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'pk': self.object.post.id})
@@ -190,11 +189,10 @@ class ReplyCreateView(LoginRequiredMixin, CreateView):
         parent_comment = get_object_or_404(Comment, id=parent_comment_id)
         form.instance.post = parent_comment.post
         form.instance.user = self.request.user
-        form.instance.reply_comment = parent_comment  # Исправлено на reply_comment
+        form.instance.reply_comment = parent_comment
 
         self.object = form.save()
 
-        # Возвращаем JSON-ответ с данными созданного ответа
         data = {
             'success': True,
             'id': self.object.id,
@@ -204,7 +202,6 @@ class ReplyCreateView(LoginRequiredMixin, CreateView):
         return JsonResponse(data)
 
     def form_invalid(self, form):
-        # Возвращаем JSON-ответ с ошибками валидации формы
         data = {
             'success': False,
             'errors': form.errors,
@@ -213,8 +210,8 @@ class ReplyCreateView(LoginRequiredMixin, CreateView):
 
 
 class ReplyUpdateView(LoginRequiredMixin, UpdateView):
-    model = Comment  # Assuming Comment model is used for replies
-    form_class = CommentForm  # Use your actual form class here
+    model = Comment
+    form_class = CommentForm
 
     def get_object(self, queryset=None):
         return get_object_or_404(Comment, id=self.kwargs['reply_id'])
@@ -241,18 +238,15 @@ class ReplyDeleteView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
         success_url = self.get_success_url()
 
-        # Ensure only administrators can delete any reply, while authors can only delete their own replies
         if request.user.is_superuser or self.object.user == request.user:
             self.object.delete()
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'success': True})
             return redirect(success_url)
         else:
-            # Handle unauthorized deletion attempt
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return JsonResponse({'success': False, 'error': 'Unauthorized'})
-            # You may choose to raise a 403 Forbidden or redirect to an error page
-            return redirect(success_url)  # Redirect to success URL as fallback
+            return redirect(success_url)
 
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'pk': self.object.post.id})

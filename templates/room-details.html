@@ -105,6 +105,17 @@
                             <h6>Children and extra beds</h6>
                             <p>Children are welcome Kids stay free! Children stay free when using existing bedding; children may not be eligible for complimentary breakfast Rollaway/extra beds are available for $ 10 per day.</p>
                         </div>
+                                        <!-- Check if room is booked -->
+                {% if room.bookings.exists %}
+                    <div class="alert alert-warning" role="alert">
+                        This room is currently booked on the following dates:
+                        <ul>
+                            {% for booking in room.bookings.all %}
+                                <li>{{ booking.check_in_date }} - {{ booking.check_out_date }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
                         <div class="col-md-12">
                             <div class="butn-dark mt-15 mb-30"> <a href="{% url 'service' %}"><span>Check Now</span></a> </div>
                         </div>

@@ -29,5 +29,7 @@ class RestaurantMenuForm(forms.ModelForm):
             'name',
             'description',
             'price',
+            'photo',
         ]
+
 

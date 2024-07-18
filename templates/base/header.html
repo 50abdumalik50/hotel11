@@ -19,7 +19,7 @@
                 <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Rooms & Suites <i class="ti-angle-down"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="{%  url 'rooms_list' %}" class="dropdown-item"><span>Rooms</span></a></li>
-{#                        <li><a href="rooms2.html" class="dropdown-item"><span>Rooms 2</span></a></li>#}
+                        <li><a href="{% url 'room-search' %}" class="dropdown-item"><span>Search</span></a></li>
                         {% for room in rooms %}
                             <li><a href="{% url 'room_details_AS' room.pk %}" class="dropdown-item"><span>{{ room.pk }}</span></a></li>
                         {% endfor %}
@@ -54,13 +54,14 @@
                         </ul>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
-                            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Register <i class="ti-angle-down"></i></a>
+                            <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">User <i class="ti-angle-down"></i></a>
                         <ul class="dropdown-menu">
                             {% if not user.is_authenticated %}
                         <li><a href="{% url 'register' %}" class="dropdown-item"><span>Регистрация</span></a></li>
                             <li><a href="{% url 'login' %}" class="dropdown-item"><span>Войти</span></a></li>
                         {% else %}
                             <li><a href="{% url 'logout' %}" class="dropdown-item"><span>Выйти</span></a></li>
+                            <li><a href="{% url 'profile' %}" class="dropdown-item"><span>Профиль</span></a></li>
                         {% endif %}
                         </ul>
                 </li>

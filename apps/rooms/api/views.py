@@ -38,6 +38,11 @@ class RoomUpdateDeleteRetrieveAPIView(generics.RetrieveUpdateDestroyAPIView):
 #     queryset = Room.objects.all()
 #     serializer_class = RoomSerializer
 
+class BookingViewSet(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    # permission_classes = [IsAdmin]
+
 
 class BookingListCreateView(generics.ListCreateAPIView):
     queryset = Booking.objects.all()

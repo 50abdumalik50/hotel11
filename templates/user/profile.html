@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Roboto:wght@400;500&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to bottom right, #1e3c72, #2a5298), url('https://example.com/luxury-hotel-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+        .main {
+            width: 100%;
+            max-width: 500px;
+            background: linear-gradient(to bottom right, #ffffff, #f7f9f9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .main h2 {
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .main .profile-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .main .profile-details label {
+            margin-bottom: 10px;
+            color: #34495e;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            width: 100%;
+        }
+        .main .profile-details div {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #333;
+            background-color: #ecf0f1;
+            padding: 12px;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .main a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 95%;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .main a:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+        .main img {
+            margin: 20px auto;
+            display: block;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media screen and (max-width: 768px) {
+            .main {
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+            .main h2 {
+                font-size: 28px;
+            }
+            .main .profile-details div {
+                padding: 10px;
+                font-size: 14px;
+            }
+            .main a {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h2>User Profile</h2>
+        <img src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'img/default-profile.jpg' %}{% endif %}" alt="Profile Picture">
+        <div class="profile-details">
+            <label><i class="fas fa-user"></i> Username:</label>
+            <div>{{ user.username }}</div>
+
+            <label><i class="fas fa-envelope"></i> Email:</label>
+            <div>{{ user.email }}</div>
+
+            <label><i class="fas fa-phone-alt"></i> Phone Number:</label>
+            <div>{{ user.country_code }} {{ user.phone_number }}</div>
+        </div>
+        <a href="{% url 'edit_profile' %}">Edit Profile</a>
+        <a href="{% url 'delete_profile' %}">Delete Profile</a>
+    </div>
+</body>
+</html>
+

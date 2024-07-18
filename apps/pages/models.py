@@ -1,6 +1,6 @@
 import os
+from django.core.exceptions import ValidationError
 from django.db import models
-
 from utils.image_path import upload_teams
 
 
@@ -26,22 +26,17 @@ class Team(models.Model):
         null=True,
     )
 
+    def clean(self):
+        if Team.objects.filter(name=self.name).exclude(pk=self.pk).exists():
+            raise ValidationError(f'Team with name "{self.name}" already exists.')
 
-# class TeamImage(models.Model):
-#     team = models.ForeignKey(
-#         Team, on_delete=models.CASCADE,
-#         related_name='images',
-#     )
-#     image = models.ImageField(
-#         upload_to=upload_teams,
-#     )
-#
-#     def delete(self, using=None, keep_parents=False):
-#         os.remove(self.image.path)
-#         super().delete(using=None, keep_parents=False)
-#
-#     def __str__(self):
-#         return f"{self.image.url}"
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+
+    def __str__(self):
+        return f"{self.name} ({self.occupation})"
 
 
 class Facilities(models.Model):
@@ -64,9 +59,6 @@ class Contact(models.Model):
     subject = models.CharField(
         max_length=50
     )
-    # message = models.TextField(
-    #     max_length=100
-    # )
 
 
 class About(models.Model):

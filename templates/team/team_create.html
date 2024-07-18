@@ -1,18 +1,109 @@
-
-
 {% extends 'base/base.html' %}
 
-
 {% block content %}
-  <h2>Create Team</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-  </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Team</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #59332e;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-  {% if form.instance.image_for_team %}
-    <h3>Team Image Preview:</h3>
-    <img src="{{ form.instance.image_for_team.url }}" alt="{{ form.instance.name }}">
-  {% endif %}
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin-top: 5rem;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: #ffffff;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #888888;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      background-color: #352e2e;
+      color: #ffffff;
+    }
+
+    button[type="submit"],
+    a.btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 5px;
+      text-align: center;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"] {
+      background-color: #007BFF;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover,
+    a.btn:hover {
+      background-color: #0056b3;
+    }
+
+    a.btn {
+      background-color: #6c757d;
+      color: #ffffff;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create Team</h2>
+    <form method="post" enctype="multipart/form-data" class="form-horizontal">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+
+    {% if form.instance.image_for_team %}
+      <h3>Team Image Preview:</h3>
+      <img src="{{ form.instance.image_for_team.url }}" alt="{{ form.instance.name }}">
+    {% endif %}
+  </div>
+</body>
+</html>
 {% endblock %}
